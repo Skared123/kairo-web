@@ -1,5 +1,6 @@
 import "server-only";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 import createClient from "openapi-fetch";
 import type { paths } from "./schema";
 import { SESSION_COOKIE } from "./session";
@@ -18,4 +19,13 @@ export async function serverApi() {
     // Every answer depends on who is asking: never let fetch reuse one.
     cache: "no-store",
   });
+}
+
+/**
+ * The API client for public endpoints, which need no session. It sends no cookie at all. Waits for the request
+ * (connection()), so the answer is never baked into a prerendered page.
+ */
+export async function publicServerApi() {
+  await connection();
+  return createClient<paths>({ baseUrl: API_URL, cache: "no-store" });
 }

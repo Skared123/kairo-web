@@ -1,0 +1,45 @@
+{
+  "Metadata": {
+    "description": "Job search companion: track applications, get prepared, and act on the right opportunity in time."
+  },
+  "Home": {
+    "tagline": "Job search companion.",
+    "checking": "Checking your session…",
+    "signedInAs": "Signed in as {name}",
+    "notSignedIn": "You are not signed in.",
+    "signIn": "Sign in"
+  },
+  "Preferences": {
+    "darkTheme": "Dark theme",
+    "language": "Language"
+  },
+  "Locales": {
+    "es": "Español",
+    "en": "English"
+  },
+  "Fields": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password"
+  },
+  "Validation": {
+    "required": "This field is required.",
+    "email": "Enter a valid email address.",
+    "tooLong": "At most {max} characters.",
+    "unexpected": "Something went wrong. Try again."
+  },
+  "SignIn": {
+    "title": "Sign in",
+    "description": "Use your email and password.",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "invalidCredentials": "Invalid email or password."
+  },
+  "Setup": {
+    "title": "Set up Kairo",
+    "description": "Create the admin account. This happens once; after that, the admin creates every other account.",
+    "submit": "Create account",
+    "submitting": "Creating…",
+    "alreadyDone": "Kairo is already set up. Sign in."
+  }
+}

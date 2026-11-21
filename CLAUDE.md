@@ -19,7 +19,14 @@ The product docs live in the API repo, cloned next to this one (`../kairo-api`, 
   call `API_URL` directly and forward only the session cookie.
 - **Reads in Server Components, writes from Client Components**, then `router.refresh()` (decision 019).
 - **API types are generated** from the API's OpenAPI document (decision 020). Never write API types by hand.
-- **UI:** Tailwind CSS 4 and shadcn/ui (decision 021).
+- **UI:** Tailwind CSS 4 and shadcn/ui (decision 021). Add components with `pnpm dlx shadcn@latest add <name>`.
+- **Languages:** Spanish (default) and English with next-intl, the locale in the URL (decision 023). Every UI string
+  goes in `messages/es.json` and `messages/en.json` with the same keys; never write UI text in a component. Use
+  `Link`, `redirect`, `useRouter` and `usePathname` from `@/i18n/navigation`, not from `next/*`.
+- **Forms:** React Hook Form and zod with the `TextField` component (decision 024). Schemas mirror the API's rules.
+- **Theme:** next-themes, toggled by the `Switch` in `PreferencesBar` (decision 025).
+- **Request-time data** (the session, `needsSetup`) is read behind `<Suspense>`: Cache Components refuses it in the
+  prerendered shell. Session reads go through `getCurrentUser()`; public endpoints through `publicServerApi()`.
 - **The API decides.** Hiding a button is UX, not security: every check that matters is in the API.
 
 ## Tooling

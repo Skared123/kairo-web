@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
 /**
  * Where the Kairo API listens. The browser never calls it directly (decision 018).
@@ -24,4 +25,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Loads i18n/request.ts for every request (decision 023).
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);

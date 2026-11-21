@@ -1,0 +1,45 @@
+{
+  "Metadata": {
+    "description": "Compañero de búsqueda de empleo: da seguimiento a tus postulaciones, prepárate y actúa a tiempo en la oportunidad correcta."
+  },
+  "Home": {
+    "tagline": "Compañero de búsqueda de empleo.",
+    "checking": "Revisando tu sesión…",
+    "signedInAs": "Sesión iniciada como {name}",
+    "notSignedIn": "No has iniciado sesión.",
+    "signIn": "Iniciar sesión"
+  },
+  "Preferences": {
+    "darkTheme": "Tema oscuro",
+    "language": "Idioma"
+  },
+  "Locales": {
+    "es": "Español",
+    "en": "English"
+  },
+  "Fields": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "password": "Contraseña"
+  },
+  "Validation": {
+    "required": "Este campo es obligatorio.",
+    "email": "Escribe un correo electrónico válido.",
+    "tooLong": "Máximo {max} caracteres.",
+    "unexpected": "Algo salió mal. Intenta de nuevo."
+  },
+  "SignIn": {
+    "title": "Iniciar sesión",
+    "description": "Entra con tu correo y tu contraseña.",
+    "submit": "Iniciar sesión",
+    "submitting": "Entrando…",
+    "invalidCredentials": "Correo o contraseña incorrectos."
+  },
+  "Setup": {
+    "title": "Configura Kairo",
+    "description": "Crea la cuenta de administrador. Solo se hace una vez; después, el administrador crea las demás cuentas.",
+    "submit": "Crear cuenta",
+    "submitting": "Creando…",
+    "alreadyDone": "Kairo ya está configurado. Inicia sesión."
+  }
+}
