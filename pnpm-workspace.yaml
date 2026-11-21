@@ -1,3 +1,9 @@
+# pnpm settings for this single-package project (not a monorepo).
+# Dependency install scripts that were reviewed. Anything not listed stays blocked until reviewed.
 allowBuilds:
+  # Image optimization for next/image. Its prebuilt binary comes as an optional dependency; the script only
+  # builds from source when no prebuilt binary fits the platform.
   sharp: false
+  # Native module resolver used by eslint-config-next's import rules. The prebuilt binding also comes as an
+  # optional dependency.
   unrs-resolver: false
