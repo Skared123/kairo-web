@@ -16,7 +16,14 @@ pnpm dev
 ```
 
 The app runs on [http://localhost:3000](http://localhost:3000). Requests to `/api/*` are forwarded to the API at
-`API_URL` (`http://localhost:4000` by default).
+`API_URL` (`http://localhost:4000` by default). `pnpm build` fixes that address into the build, so rebuild after
+changing it.
+
+After the API changes, regenerate its types with the API running:
+
+```bash
+pnpm api:types
+```
 
 ## Scripts
 
@@ -25,6 +32,7 @@ The app runs on [http://localhost:3000](http://localhost:3000). Requests to `/ap
 | `pnpm dev` | Development server with Turbopack |
 | `pnpm build` / `pnpm start` | Production build, and serving it |
 | `pnpm lint` | ESLint with the Next.js rules |
+| `pnpm api:types` | Regenerates `lib/api/schema.d.ts` from the running API's OpenAPI document |
 
 ## License
 

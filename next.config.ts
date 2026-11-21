@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
-/** Where the Kairo API listens. The browser never calls it directly (decision 018). */
+/**
+ * Where the Kairo API listens. The browser never calls it directly (decision 018).
+ * The rewrites below are fixed when the app is built: after changing API_URL, rebuild (`pnpm dev` reads it at start).
+ */
 const apiUrl = process.env.API_URL ?? "http://localhost:4000";
 
 const nextConfig: NextConfig = {
