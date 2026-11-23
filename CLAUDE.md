@@ -27,8 +27,11 @@ The product docs live in the API repo, cloned next to this one (`../kairo-api`, 
 - **Theme:** next-themes, toggled by the `Switch` in `PreferencesBar` (decision 025).
 - **Request-time data** (the session, `needsSetup`) is read behind `<Suspense>`: Cache Components refuses it in the
   prerendered shell. Session reads go through `getCurrentUser()`; public endpoints through `publicServerApi()`.
-- **Signed-in pages** live in `app/[locale]/(app)/` and call `requireUser()`; guest pages (sign-in, setup) live in
+- **Signed-in pages** live in `app/[locale]/(app)/` and call `requireUser()` (admin pages: `requireAdmin()`, with
+  everything admin-only inside the gated component); guest pages (sign-in, setup) live in
   `(auth)/` and are listed in `GUEST_PAGES` in `proxy.ts`, which sends guests without a session cookie to sign-in.
+- **The current time** is only read in the browser (Cache Components refuses it on the server): dates go through
+  `ClientDate`, and anything comparing with "now" mounts client-side.
 - **The API decides.** Hiding a button is UX, not security: every check that matters is in the API.
 
 ## Tooling

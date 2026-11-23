@@ -1,4 +1,4 @@
-import { KeyRound } from "lucide-react";
+import { KeyRound, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
@@ -33,6 +33,15 @@ async function SignedInAs() {
   const user = await requireUser({ allowPendingPasswordChange: true });
   return (
     <div className="flex items-center gap-2">
+      {/* Only a shortcut: /admin/users checks the role, and so does the API. */}
+      {user.role === "admin" && (
+        <Button asChild variant="ghost" size="sm">
+          <Link href="/admin/users">
+            <Users aria-hidden />
+            {t("admin")}
+          </Link>
+        </Button>
+      )}
       <span className="text-sm text-muted-foreground" title={user.email}>
         {user.name}
       </span>

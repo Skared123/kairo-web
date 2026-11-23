@@ -9,7 +9,8 @@
   "AppHeader": {
     "signOut": "Cerrar sesión",
     "signingOut": "Cerrando…",
-    "password": "Contraseña"
+    "password": "Contraseña",
+    "admin": "Administración"
   },
   "Preferences": {
     "darkTheme": "Tema oscuro",
@@ -25,7 +26,8 @@
     "password": "Contraseña",
     "currentPassword": "Contraseña actual",
     "newPassword": "Nueva contraseña",
-    "confirmPassword": "Confirma la nueva contraseña"
+    "confirmPassword": "Confirma la nueva contraseña",
+    "role": "Rol"
   },
   "Validation": {
     "required": "Este campo es obligatorio.",
@@ -57,5 +59,87 @@
     "submit": "Cambiar contraseña",
     "submitting": "Cambiando…",
     "wrongCurrent": "La contraseña actual no es correcta."
+  },
+  "Admin": {
+    "title": "Cuentas",
+    "description": "Crea cuentas y gestiona su acceso. Aquí no ves lo que cada persona guarda en Kairo.",
+    "newAccount": "Nueva cuenta",
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo",
+      "role": "Rol",
+      "status": "Estado",
+      "password": "Contraseña",
+      "created": "Alta",
+      "actions": "Acciones"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "Usuario"
+    },
+    "status": {
+      "active": "Activa",
+      "inactive": "Desactivada"
+    },
+    "password": {
+      "own": "Propia",
+      "pending": "Temporal, vence",
+      "expired": "Temporal vencida"
+    },
+    "you": "tú",
+    "create": {
+      "title": "Nueva cuenta",
+      "description": "Kairo genera una contraseña temporal que vence en 72 horas.",
+      "submit": "Crear cuenta",
+      "submitting": "Creando…",
+      "emailTaken": "Ya existe una cuenta con ese correo."
+    },
+    "temporaryPassword": {
+      "title": "Contraseña temporal",
+      "description": "Compártela con {name}. Solo se muestra esta vez y vence en 72 horas.",
+      "copy": "Copiar",
+      "copied": "Copiada",
+      "done": "Listo"
+    },
+    "actions": {
+      "menu": "Acciones para {name}",
+      "makeAdmin": "Hacer admin",
+      "makeUser": "Quitar admin",
+      "deactivate": "Desactivar",
+      "reactivate": "Reactivar",
+      "resetPassword": "Resetear contraseña"
+    },
+    "confirm": {
+      "makeAdmin": {
+        "title": "¿Hacer admin a {name}?",
+        "description": "Podrá crear y gestionar cuentas."
+      },
+      "makeUser": {
+        "title": "¿Quitarle el rol de admin a {name}?",
+        "description": "Ya no podrá gestionar cuentas."
+      },
+      "deactivate": {
+        "title": "¿Desactivar a {name}?",
+        "description": "No podrá iniciar sesión y se cerrarán todas sus sesiones."
+      },
+      "reactivate": {
+        "title": "¿Reactivar a {name}?",
+        "description": "Podrá volver a iniciar sesión."
+      },
+      "resetPassword": {
+        "title": "¿Resetear la contraseña de {name}?",
+        "description": "Su contraseña actual dejará de servir, se cerrarán sus sesiones y tendrá que entrar con una temporal nueva."
+      },
+      "submit": "Confirmar",
+      "cancel": "Cancelar",
+      "working": "Guardando…"
+    },
+    "errors": {
+      "lastAdmin": "Debe haber al menos un admin activo.",
+      "notFound": "Esa cuenta ya no existe."
+    }
+  },
+  "Common": {
+    "close": "Cerrar"
   }
 }

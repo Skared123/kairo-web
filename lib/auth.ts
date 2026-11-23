@@ -44,3 +44,12 @@ export async function requireUser({ allowPendingPasswordChange = false } = {}): 
   }
   return user;
 }
+
+/** The signed-in admin, or a redirect home for anyone else. The API refuses non-admins too; this is the UX side. */
+export async function requireAdmin(): Promise<CurrentUser> {
+  const user = await requireUser();
+  if (user.role !== "admin") {
+    return redirect({ href: "/", locale: await getLocale() });
+  }
+  return user;
+}

@@ -9,7 +9,8 @@
   "AppHeader": {
     "signOut": "Sign out",
     "signingOut": "Signing out…",
-    "password": "Password"
+    "password": "Password",
+    "admin": "Admin"
   },
   "Preferences": {
     "darkTheme": "Dark theme",
@@ -25,7 +26,8 @@
     "password": "Password",
     "currentPassword": "Current password",
     "newPassword": "New password",
-    "confirmPassword": "Confirm the new password"
+    "confirmPassword": "Confirm the new password",
+    "role": "Role"
   },
   "Validation": {
     "required": "This field is required.",
@@ -57,5 +59,87 @@
     "submit": "Change password",
     "submitting": "Changing…",
     "wrongCurrent": "The current password is not correct."
+  },
+  "Admin": {
+    "title": "Accounts",
+    "description": "Create accounts and manage their access. You never see what each person keeps in Kairo here.",
+    "newAccount": "New account",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "password": "Password",
+      "created": "Created",
+      "actions": "Actions"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "User"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Deactivated"
+    },
+    "password": {
+      "own": "Own",
+      "pending": "Temporary, expires",
+      "expired": "Temporary, expired"
+    },
+    "you": "you",
+    "create": {
+      "title": "New account",
+      "description": "Kairo generates a temporary password that expires in 72 hours.",
+      "submit": "Create account",
+      "submitting": "Creating…",
+      "emailTaken": "An account with this email already exists."
+    },
+    "temporaryPassword": {
+      "title": "Temporary password",
+      "description": "Share it with {name}. It is shown only this once and expires in 72 hours.",
+      "copy": "Copy",
+      "copied": "Copied",
+      "done": "Done"
+    },
+    "actions": {
+      "menu": "Actions for {name}",
+      "makeAdmin": "Make admin",
+      "makeUser": "Remove admin",
+      "deactivate": "Deactivate",
+      "reactivate": "Reactivate",
+      "resetPassword": "Reset password"
+    },
+    "confirm": {
+      "makeAdmin": {
+        "title": "Make {name} an admin?",
+        "description": "They will be able to create and manage accounts."
+      },
+      "makeUser": {
+        "title": "Remove {name}'s admin role?",
+        "description": "They will no longer manage accounts."
+      },
+      "deactivate": {
+        "title": "Deactivate {name}?",
+        "description": "They will not be able to sign in, and all their sessions will end."
+      },
+      "reactivate": {
+        "title": "Reactivate {name}?",
+        "description": "They will be able to sign in again."
+      },
+      "resetPassword": {
+        "title": "Reset {name}'s password?",
+        "description": "Their current password stops working, their sessions end, and they sign in with a new temporary one."
+      },
+      "submit": "Confirm",
+      "cancel": "Cancel",
+      "working": "Saving…"
+    },
+    "errors": {
+      "lastAdmin": "There must be at least one active admin.",
+      "notFound": "That account no longer exists."
+    }
+  },
+  "Common": {
+    "close": "Close"
   }
 }
