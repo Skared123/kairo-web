@@ -16,7 +16,10 @@ export function AppHeader() {
         Kairo
       </Link>
       <div className="flex items-center gap-4">
-        <LocaleSwitcher />
+        {/* It reads the current path, which on routes with parameters (/jobs/[id]) is request-time data. */}
+        <Suspense fallback={null}>
+          <LocaleSwitcher />
+        </Suspense>
         <ThemeSwitch />
         {/* Reads the session, so it streams in after the rest of the bar. */}
         <Suspense fallback={null}>

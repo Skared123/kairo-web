@@ -1,7 +1,9 @@
+import { Plus } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { CriteriaBadges } from "@/components/criteria-badges";
 import { JobStatusBadge } from "@/components/job-status-badge";
+import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Link } from "@/i18n/navigation";
 import { listJobs, type JobFilters } from "@/lib/api/jobs";
@@ -18,9 +20,17 @@ export default async function JobsPage({ searchParams }: { searchParams: SearchP
   const t = await getTranslations("Jobs");
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
-        <p className="text-sm text-muted-foreground">{t("description")}</p>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
+          <p className="text-sm text-muted-foreground">{t("description")}</p>
+        </div>
+        <Button asChild>
+          <Link href="/jobs/new">
+            <Plus aria-hidden />
+            {t("new")}
+          </Link>
+        </Button>
       </div>
       {/* The filters come from the URL and the jobs from the session: both are request-time data. */}
       <Suspense fallback={null}>

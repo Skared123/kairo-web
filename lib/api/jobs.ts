@@ -18,3 +18,17 @@ export async function listJobs(filters: JobFilters): Promise<Job[]> {
   }
   return data;
 }
+
+/** One of the user's jobs, or null when it does not exist or belongs to someone else (the API answers 404 to both). */
+export async function getJob(id: string): Promise<Job | null> {
+  await connection();
+  const api = await serverApi();
+  const { data, response } = await api.GET("/jobs/{id}", { params: { path: { id } } });
+  if (response.status === 404 || response.status === 400) {
+    return null;
+  }
+  if (!data) {
+    throw new Error(`GET /jobs/${id} answered ${response.status}`);
+  }
+  return data;
+}

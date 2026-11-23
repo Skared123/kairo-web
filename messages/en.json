@@ -36,7 +36,12 @@
     "tooLong": "At most {max} characters.",
     "unexpected": "Something went wrong. Try again.",
     "passwordsDontMatch": "The passwords do not match.",
-    "samePassword": "The new password must differ from the current one."
+    "samePassword": "The new password must differ from the current one.",
+    "url": "Enter a link that starts with http:// or https://.",
+    "wholeNumber": "Enter a whole amount, without dots or commas.",
+    "currency": "Use a 3-letter code, such as MXN or USD.",
+    "salaryIncomplete": "A salary needs its currency and period.",
+    "salaryRange": "The maximum cannot be lower than the minimum."
   },
   "SignIn": {
     "title": "Sign in",
@@ -187,6 +192,74 @@
       "misses": "misses",
       "unknown": "not stated",
       "not_comparable": "not comparable"
+    },
+    "new": "New job"
+  },
+  "JobForm": {
+    "newTitle": "New job",
+    "editTitle": "Edit job",
+    "create": "Save job",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "none": "—",
+    "notFound": "That job no longer exists.",
+    "sections": {
+      "posting": "The posting",
+      "conditions": "Conditions",
+      "details": "Details",
+      "followUp": "Next follow-up"
+    },
+    "fields": {
+      "company": "Company",
+      "title": "Title",
+      "url": "Link",
+      "source": "Where you found it",
+      "workMode": "Work mode",
+      "location": "Location",
+      "contractType": "Contract",
+      "timeZoneNotes": "Hours or time zone",
+      "salaryMin": "Minimum salary",
+      "salaryMax": "Maximum salary",
+      "salaryCurrency": "Currency",
+      "salaryPeriod": "Period",
+      "description": "Description",
+      "notes": "Notes",
+      "nextFollowUpOn": "Date",
+      "nextFollowUpNote": "What to do"
+    },
+    "placeholders": {
+      "timeZoneNotes": "E.g. 9 to 6, US Central",
+      "description": "Paste the whole posting here: it stays even if the posting disappears.",
+      "nextFollowUpNote": "E.g. write to the recruiter"
+    },
+    "options": {
+      "source": {
+        "linkedin": "LinkedIn",
+        "referral": "Referral",
+        "company_site": "Company site",
+        "job_board": "Job board",
+        "recruiter": "Recruiter",
+        "other": "Other"
+      },
+      "workMode": {
+        "remote": "Remote",
+        "hybrid": "Hybrid",
+        "onsite": "On-site"
+      },
+      "contractType": {
+        "employee": "Employee",
+        "contractor": "Contractor"
+      },
+      "period": {
+        "month": "Per month",
+        "year": "Per year"
+      }
+    },
+    "duplicates": {
+      "title": "You saved {company} · {title}, but it looks like jobs you already have",
+      "description": "Check whether it is the same posting. The new job was saved anyway.",
+      "link": "open posting",
+      "continue": "Go to jobs"
     }
   }
 }

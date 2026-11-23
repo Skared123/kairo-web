@@ -51,6 +51,13 @@ export class Api {
     return (await res.json()).id;
   }
 
+  /** Reads one of the signed-in admin's jobs. */
+  async getJob(id: string): Promise<Record<string, unknown>> {
+    const res = await this.context.get(`/jobs/${id}`);
+    expect(res.status()).toBe(200);
+    return res.json();
+  }
+
   /** Saves the signed-in admin's criteria. */
   async saveCriteria(criteria: Record<string, unknown>): Promise<void> {
     expect((await this.context.put("/criteria", { data: criteria })).status()).toBe(200);

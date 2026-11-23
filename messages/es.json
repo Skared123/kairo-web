@@ -36,7 +36,12 @@
     "tooLong": "Máximo {max} caracteres.",
     "unexpected": "Algo salió mal. Intenta de nuevo.",
     "passwordsDontMatch": "Las contraseñas no coinciden.",
-    "samePassword": "La nueva contraseña debe ser distinta de la actual."
+    "samePassword": "La nueva contraseña debe ser distinta de la actual.",
+    "url": "Escribe un enlace que empiece con http:// o https://.",
+    "wholeNumber": "Escribe una cantidad entera, sin puntos ni comas.",
+    "currency": "Usa un código de 3 letras, como MXN o USD.",
+    "salaryIncomplete": "Un salario necesita su moneda y su periodo.",
+    "salaryRange": "El máximo no puede ser menor que el mínimo."
   },
   "SignIn": {
     "title": "Iniciar sesión",
@@ -187,6 +192,74 @@
       "misses": "no cumple",
       "unknown": "no lo dice",
       "not_comparable": "no comparable"
+    },
+    "new": "Nueva vacante"
+  },
+  "JobForm": {
+    "newTitle": "Nueva vacante",
+    "editTitle": "Editar vacante",
+    "create": "Guardar vacante",
+    "save": "Guardar cambios",
+    "saving": "Guardando…",
+    "none": "—",
+    "notFound": "Esa vacante ya no existe.",
+    "sections": {
+      "posting": "La vacante",
+      "conditions": "Condiciones",
+      "details": "Detalle",
+      "followUp": "Próximo seguimiento"
+    },
+    "fields": {
+      "company": "Empresa",
+      "title": "Puesto",
+      "url": "Enlace",
+      "source": "Dónde la encontraste",
+      "workMode": "Modalidad",
+      "location": "Ubicación",
+      "contractType": "Contrato",
+      "timeZoneNotes": "Horario o zona horaria",
+      "salaryMin": "Salario mínimo",
+      "salaryMax": "Salario máximo",
+      "salaryCurrency": "Moneda",
+      "salaryPeriod": "Periodo",
+      "description": "Descripción",
+      "notes": "Notas",
+      "nextFollowUpOn": "Fecha",
+      "nextFollowUpNote": "Qué hacer"
+    },
+    "placeholders": {
+      "timeZoneNotes": "Ej. 9 a 18 h, hora del centro",
+      "description": "Pega aquí el texto completo de la vacante: se conserva aunque la publicación desaparezca.",
+      "nextFollowUpNote": "Ej. escribirle a la reclutadora"
+    },
+    "options": {
+      "source": {
+        "linkedin": "LinkedIn",
+        "referral": "Referido",
+        "company_site": "Sitio de la empresa",
+        "job_board": "Bolsa de trabajo",
+        "recruiter": "Reclutador",
+        "other": "Otro"
+      },
+      "workMode": {
+        "remote": "Remoto",
+        "hybrid": "Híbrido",
+        "onsite": "Presencial"
+      },
+      "contractType": {
+        "employee": "Empleado",
+        "contractor": "Contratista"
+      },
+      "period": {
+        "month": "Al mes",
+        "year": "Al año"
+      }
+    },
+    "duplicates": {
+      "title": "Guardaste {company} · {title}, pero se parece a vacantes que ya tienes",
+      "description": "Revisa si es la misma publicación. La vacante nueva quedó guardada de todos modos.",
+      "link": "ver publicación",
+      "continue": "Ir a vacantes"
     }
   }
 }
