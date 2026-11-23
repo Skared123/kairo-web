@@ -1,7 +1,7 @@
 import "server-only";
 import { connection } from "next/server";
 import { serverApi } from "./server";
-import type { Job, JobSort, JobStatus } from "./types";
+import type { Job, JobSort, JobStatus, StageChange } from "./types";
 
 export type JobFilters = { status?: JobStatus; q?: string; sort?: JobSort };
 
@@ -29,6 +29,17 @@ export async function getJob(id: string): Promise<Job | null> {
   }
   if (!data) {
     throw new Error(`GET /jobs/${id} answered ${response.status}`);
+  }
+  return data;
+}
+
+/** A job's moves between stages, oldest first. Call it after getJob() found the job. */
+export async function getJobHistory(id: string): Promise<StageChange[]> {
+  await connection();
+  const api = await serverApi();
+  const { data, response } = await api.GET("/jobs/{id}/history", { params: { path: { id } } });
+  if (!data) {
+    throw new Error(`GET /jobs/${id}/history answered ${response.status}`);
   }
   return data;
 }

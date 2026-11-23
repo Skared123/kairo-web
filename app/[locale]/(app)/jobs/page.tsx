@@ -82,8 +82,16 @@ async function JobsView({ searchParams }: { searchParams: SearchParams }) {
           <TableBody>
             {jobs.map((job) => (
               <TableRow key={job.id}>
-                <TableCell className="font-medium">{job.company}</TableCell>
-                <TableCell>{job.title}</TableCell>
+                <TableCell className="font-medium">
+                  <Link href={`/jobs/${job.id}`} className="hover:underline">
+                    {job.company}
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Link href={`/jobs/${job.id}`} className="hover:underline">
+                    {job.title}
+                  </Link>
+                </TableCell>
                 <TableCell>
                   <JobStatusBadge status={job.status} />
                 </TableCell>

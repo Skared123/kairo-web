@@ -261,5 +261,26 @@
       "link": "ver publicación",
       "continue": "Ir a vacantes"
     }
+  },
+  "JobDetail": {
+    "back": "Vacantes",
+    "openPosting": "Ver publicación",
+    "edit": "Editar",
+    "stage": "Etapa",
+    "salary": "Salario",
+    "noDescription": "No guardaste la descripción de esta vacante.",
+    "noFollowUp": "Sin seguimiento pendiente.",
+    "criteria": "Tus criterios",
+    "history": "Historial",
+    "to": "a",
+    "created": "Guardada en {stage}",
+    "delete": {
+      "button": "Borrar",
+      "title": "¿Borrar {name}?",
+      "description": "Se borrará la vacante con todo su historial. No se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Borrar",
+      "deleting": "Borrando…"
+    }
   }
 }

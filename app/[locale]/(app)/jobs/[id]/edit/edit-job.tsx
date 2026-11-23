@@ -7,7 +7,7 @@ import { browserApi } from "@/lib/api/browser";
 import type { Job } from "@/lib/api/types";
 import { fromJob, type JobPayload } from "@/lib/forms/job-schema";
 
-/** Edits a job; every field is sent, so an emptied one is cleared. The stage moves on the job's page (step 7). */
+/** Edits a job; every field is sent, so an emptied one is cleared. The stage moves on the job's page. */
 export function EditJob({ job }: { job: Job }) {
   const t = useTranslations("JobForm");
   const validation = useTranslations("Validation");
@@ -22,7 +22,7 @@ export function EditJob({ job }: { job: Job }) {
       if (!response.ok) {
         return validation("unexpected");
       }
-      router.push("/jobs");
+      router.push(`/jobs/${job.id}`);
       router.refresh();
     } catch {
       return validation("unexpected");

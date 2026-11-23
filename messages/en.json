@@ -261,5 +261,26 @@
       "link": "open posting",
       "continue": "Go to jobs"
     }
+  },
+  "JobDetail": {
+    "back": "Jobs",
+    "openPosting": "Open posting",
+    "edit": "Edit",
+    "stage": "Stage",
+    "salary": "Salary",
+    "noDescription": "You did not save this job's description.",
+    "noFollowUp": "No follow-up pending.",
+    "criteria": "Your criteria",
+    "history": "History",
+    "to": "to",
+    "created": "Saved in {stage}",
+    "delete": {
+      "button": "Delete",
+      "title": "Delete {name}?",
+      "description": "The job and its whole history will be deleted. This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting…"
+    }
   }
 }

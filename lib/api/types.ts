@@ -11,6 +11,9 @@ export type Job = paths["/jobs"]["get"]["responses"][200]["content"]["applicatio
 export type JobStatus = Job["status"];
 export type JobSort = NonNullable<NonNullable<paths["/jobs"]["get"]["parameters"]["query"]>["sort"]>;
 
+/** One move between stages, as `GET /jobs/{id}/history` returns it (API decision 028). */
+export type StageChange = paths["/jobs/{id}/history"]["get"]["responses"][200]["content"]["application/json"][number];
+
 /** Every stage, in the order a job usually moves through them (API decision 028). */
 export const JOB_STATUSES = [
   "to_review",

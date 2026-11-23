@@ -57,8 +57,9 @@ test("edits a job and clears a field", async ({ page, api }) => {
   await page.getByLabel("Enlace", { exact: true }).fill("");
   await page.getByRole("button", { name: "Guardar cambios" }).click();
 
-  await expect(page).toHaveURL(/\/es\/jobs$/);
-  await expect(page.getByRole("row", { name: /Acme/ })).toContainText("Staff Engineer");
+  // Saving goes back to the job's page.
+  await expect(page).toHaveURL(new RegExp(`/es/jobs/${id}$`));
+  await expect(page.getByRole("heading", { name: "Staff Engineer" })).toBeVisible();
   expect(await api.getJob(id)).toMatchObject({ title: "Staff Engineer", url: null });
 });
 
