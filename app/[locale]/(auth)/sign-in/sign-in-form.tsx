@@ -35,7 +35,14 @@ export function SignInForm() {
         router.refresh();
         return;
       }
-      setFormError(response.status === 401 ? t("invalidCredentials") : validation("unexpected"));
+      if (response.status === 401) {
+        setFormError(t("invalidCredentials"));
+      } else if (response.status === 403) {
+        // The password was right but temporary and past its 72 hours (API decision 026).
+        setFormError(t("temporaryPasswordExpired"));
+      } else {
+        setFormError(validation("unexpected"));
+      }
     } catch {
       setFormError(validation("unexpected"));
     }

@@ -40,7 +40,8 @@
     "description": "Entra con tu correo y tu contraseña.",
     "submit": "Iniciar sesión",
     "submitting": "Entrando…",
-    "invalidCredentials": "Correo o contraseña incorrectos."
+    "invalidCredentials": "Correo o contraseña incorrectos.",
+    "temporaryPasswordExpired": "Tu contraseña temporal venció. Pide al administrador una nueva."
   },
   "Setup": {
     "title": "Configura Kairo",

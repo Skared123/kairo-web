@@ -40,7 +40,8 @@
     "description": "Use your email and password.",
     "submit": "Sign in",
     "submitting": "Signing in…",
-    "invalidCredentials": "Invalid email or password."
+    "invalidCredentials": "Invalid email or password.",
+    "temporaryPasswordExpired": "Your temporary password has expired. Ask the admin for a new one."
   },
   "Setup": {
     "title": "Set up Kairo",

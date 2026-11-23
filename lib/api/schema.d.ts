@@ -289,6 +289,13 @@ export interface operations {
                 };
                 content?: never;
             };
+            /** @description temporary_password_expired: ask the admin for a new temporary password */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     AuthController_changePassword: {
@@ -403,6 +410,8 @@ export interface operations {
                         active: boolean;
                         mustChangePassword: boolean;
                         /** Format: date-time */
+                        temporaryPasswordExpiresAt: string | null;
+                        /** Format: date-time */
                         createdAt: string;
                         /** Format: date-time */
                         deactivatedAt: string | null;
@@ -459,6 +468,8 @@ export interface operations {
                             role: "admin" | "user";
                             active: boolean;
                             mustChangePassword: boolean;
+                            /** Format: date-time */
+                            temporaryPasswordExpiresAt: string | null;
                             /** Format: date-time */
                             createdAt: string;
                             /** Format: date-time */
@@ -518,6 +529,8 @@ export interface operations {
                         role: "admin" | "user";
                         active: boolean;
                         mustChangePassword: boolean;
+                        /** Format: date-time */
+                        temporaryPasswordExpiresAt: string | null;
                         /** Format: date-time */
                         createdAt: string;
                         /** Format: date-time */
