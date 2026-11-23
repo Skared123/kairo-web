@@ -3,11 +3,12 @@
     "description": "Job search companion: track applications, get prepared, and act on the right opportunity in time."
   },
   "Home": {
-    "tagline": "Job search companion.",
-    "checking": "Checking your session…",
-    "signedInAs": "Signed in as {name}",
-    "notSignedIn": "You are not signed in.",
-    "signIn": "Sign in"
+    "greeting": "Hi, {name}",
+    "comingSoon": "Soon you will see what to do today here."
+  },
+  "AppHeader": {
+    "signOut": "Sign out",
+    "signingOut": "Signing out…"
   },
   "Preferences": {
     "darkTheme": "Dark theme",

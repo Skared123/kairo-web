@@ -1,4 +1,6 @@
 import "server-only";
+import { getLocale } from "next-intl/server";
+import { redirect } from "@/i18n/navigation";
 import { serverApi } from "./api/server";
 import type { CurrentUser } from "./api/types";
 
@@ -20,4 +22,14 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     throw new Error(`GET /auth/me answered ${response.status}`);
   }
   return data;
+}
+
+/**
+ * The signed-in user, or a redirect to sign-in. For pages and components that only make sense with a session.
+ * Same rules as getCurrentUser(): call it behind <Suspense>.
+ */
+export async function requireUser(): Promise<CurrentUser> {
+  const user = await getCurrentUser();
+  // `return` because TypeScript does not narrow on a destructured `never` function.
+  return user ?? redirect({ href: "/sign-in", locale: await getLocale() });
 }

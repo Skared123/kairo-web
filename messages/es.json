@@ -3,11 +3,12 @@
     "description": "Compañero de búsqueda de empleo: da seguimiento a tus postulaciones, prepárate y actúa a tiempo en la oportunidad correcta."
   },
   "Home": {
-    "tagline": "Compañero de búsqueda de empleo.",
-    "checking": "Revisando tu sesión…",
-    "signedInAs": "Sesión iniciada como {name}",
-    "notSignedIn": "No has iniciado sesión.",
-    "signIn": "Iniciar sesión"
+    "greeting": "Hola, {name}",
+    "comingSoon": "Pronto verás aquí lo que te toca hacer hoy."
+  },
+  "AppHeader": {
+    "signOut": "Cerrar sesión",
+    "signingOut": "Cerrando…"
   },
   "Preferences": {
     "darkTheme": "Tema oscuro",
