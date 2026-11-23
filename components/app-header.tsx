@@ -1,4 +1,7 @@
+import { KeyRound } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { requireUser } from "@/lib/auth";
 import { LocaleSwitcher } from "./locale-switcher";
@@ -25,12 +28,20 @@ export function AppHeader() {
 }
 
 async function SignedInAs() {
-  const user = await requireUser();
+  const t = await getTranslations("AppHeader");
+  // The header is on every signed-in page, /password included; the pages themselves enforce a forced change.
+  const user = await requireUser({ allowPendingPasswordChange: true });
   return (
     <div className="flex items-center gap-2">
       <span className="text-sm text-muted-foreground" title={user.email}>
         {user.name}
       </span>
+      <Button asChild variant="ghost" size="sm">
+        <Link href="/password">
+          <KeyRound aria-hidden />
+          {t("password")}
+        </Link>
+      </Button>
       <SignOutButton />
     </div>
   );

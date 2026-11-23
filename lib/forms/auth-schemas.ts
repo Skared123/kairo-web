@@ -5,6 +5,8 @@ export type ValidationMessages = {
   required: string;
   email: string;
   tooLong: (max: number) => string;
+  passwordsDontMatch: string;
+  samePassword: string;
 };
 
 // The same limits as the API's schemas (kairo-api src/auth/auth.schemas.ts); the API still decides (decision 024).
@@ -32,3 +34,12 @@ export function setupSchema(m: ValidationMessages) {
   });
 }
 export type SetupValues = z.infer<ReturnType<typeof setupSchema>>;
+
+/** The API checks the current password and that the new one differs (POST /auth/password); the confirmation is UI only. */
+export function changePasswordSchema(m: ValidationMessages) {
+  return z
+    .object({ currentPassword: password(m), newPassword: password(m), confirmPassword: z.string().min(1, m.required) })
+    .refine((v) => v.newPassword === v.confirmPassword, { path: ["confirmPassword"], message: m.passwordsDontMatch })
+    .refine((v) => v.newPassword !== v.currentPassword, { path: ["newPassword"], message: m.samePassword });
+}
+export type ChangePasswordValues = z.infer<ReturnType<typeof changePasswordSchema>>;

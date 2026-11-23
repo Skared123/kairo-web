@@ -8,7 +8,8 @@
   },
   "AppHeader": {
     "signOut": "Cerrar sesión",
-    "signingOut": "Cerrando…"
+    "signingOut": "Cerrando…",
+    "password": "Contraseña"
   },
   "Preferences": {
     "darkTheme": "Tema oscuro",
@@ -21,13 +22,18 @@
   "Fields": {
     "name": "Nombre",
     "email": "Correo electrónico",
-    "password": "Contraseña"
+    "password": "Contraseña",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirma la nueva contraseña"
   },
   "Validation": {
     "required": "Este campo es obligatorio.",
     "email": "Escribe un correo electrónico válido.",
     "tooLong": "Máximo {max} caracteres.",
-    "unexpected": "Algo salió mal. Intenta de nuevo."
+    "unexpected": "Algo salió mal. Intenta de nuevo.",
+    "passwordsDontMatch": "Las contraseñas no coinciden.",
+    "samePassword": "La nueva contraseña debe ser distinta de la actual."
   },
   "SignIn": {
     "title": "Iniciar sesión",
@@ -42,5 +48,13 @@
     "submit": "Crear cuenta",
     "submitting": "Creando…",
     "alreadyDone": "Kairo ya está configurado. Inicia sesión."
+  },
+  "Password": {
+    "title": "Cambiar contraseña",
+    "description": "Tus otras sesiones se cerrarán; esta seguirá abierta.",
+    "required": "Tu cuenta usa una contraseña temporal. Cámbiala para continuar.",
+    "submit": "Cambiar contraseña",
+    "submitting": "Cambiando…",
+    "wrongCurrent": "La contraseña actual no es correcta."
   }
 }

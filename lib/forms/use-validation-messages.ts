@@ -8,7 +8,13 @@ import type { ValidationMessages } from "./auth-schemas";
 export function useValidationMessages(): ValidationMessages {
   const t = useTranslations("Validation");
   return useMemo(
-    () => ({ required: t("required"), email: t("email"), tooLong: (max: number) => t("tooLong", { max }) }),
+    () => ({
+      required: t("required"),
+      email: t("email"),
+      tooLong: (max: number) => t("tooLong", { max }),
+      passwordsDontMatch: t("passwordsDontMatch"),
+      samePassword: t("samePassword"),
+    }),
     [t],
   );
 }

@@ -8,7 +8,8 @@
   },
   "AppHeader": {
     "signOut": "Sign out",
-    "signingOut": "Signing out…"
+    "signingOut": "Signing out…",
+    "password": "Password"
   },
   "Preferences": {
     "darkTheme": "Dark theme",
@@ -21,13 +22,18 @@
   "Fields": {
     "name": "Name",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm the new password"
   },
   "Validation": {
     "required": "This field is required.",
     "email": "Enter a valid email address.",
     "tooLong": "At most {max} characters.",
-    "unexpected": "Something went wrong. Try again."
+    "unexpected": "Something went wrong. Try again.",
+    "passwordsDontMatch": "The passwords do not match.",
+    "samePassword": "The new password must differ from the current one."
   },
   "SignIn": {
     "title": "Sign in",
@@ -42,5 +48,13 @@
     "submit": "Create account",
     "submitting": "Creating…",
     "alreadyDone": "Kairo is already set up. Sign in."
+  },
+  "Password": {
+    "title": "Change password",
+    "description": "Your other sessions will end; this one stays open.",
+    "required": "Your account uses a temporary password. Change it to continue.",
+    "submit": "Change password",
+    "submitting": "Changing…",
+    "wrongCurrent": "The current password is not correct."
   }
 }
