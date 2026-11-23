@@ -58,6 +58,11 @@ export class Api {
     return res.json();
   }
 
+  /** Deletes one of the signed-in admin's jobs, as another tab would. */
+  async deleteJob(id: string): Promise<void> {
+    expect((await this.context.delete(`/jobs/${id}`)).status()).toBe(204);
+  }
+
   /** Saves the signed-in admin's criteria. */
   async saveCriteria(criteria: Record<string, unknown>): Promise<void> {
     expect((await this.context.put("/criteria", { data: criteria })).status()).toBe(200);
