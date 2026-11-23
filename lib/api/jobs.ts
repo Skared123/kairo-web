@@ -1,6 +1,7 @@
 import "server-only";
 import { connection } from "next/server";
 import { serverApi } from "./server";
+import type { paths } from "./schema";
 import type { Job, JobSort, JobStatus, StageChange } from "./types";
 
 export type JobFilters = { status?: JobStatus; q?: string; sort?: JobSort };
@@ -40,6 +41,17 @@ export async function getJobHistory(id: string): Promise<StageChange[]> {
   const { data, response } = await api.GET("/jobs/{id}/history", { params: { path: { id } } });
   if (!data) {
     throw new Error(`GET /jobs/${id}/history answered ${response.status}`);
+  }
+  return data;
+}
+
+/** The signed-in user's criteria, or the empty defaults before the first save. */
+export async function getCriteria(): Promise<paths["/criteria"]["get"]["responses"][200]["content"]["application/json"]> {
+  await connection();
+  const api = await serverApi();
+  const { data, response } = await api.GET("/criteria");
+  if (!data) {
+    throw new Error(`GET /criteria answered ${response.status}`);
   }
   return data;
 }

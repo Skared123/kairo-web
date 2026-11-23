@@ -127,6 +127,9 @@ async function JobDetail({ params }: { params: Promise<{ id: string }> }) {
 
           <Section title={t("criteria")}>
             <CriteriaBadges criteria={job.criteria} />
+            <Link href="/criteria" className="text-xs text-muted-foreground hover:underline">
+              {t("editCriteria")}
+            </Link>
           </Section>
 
           <Section title={t("history")}>

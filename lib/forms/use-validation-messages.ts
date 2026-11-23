@@ -4,8 +4,10 @@ import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import type { JobValidationMessages } from "./job-schema";
 
+export type FormValidationMessages = JobValidationMessages & { salaryTarget: string };
+
 /** The current language's validation messages, for every form schema. */
-export function useValidationMessages(): JobValidationMessages {
+export function useValidationMessages(): FormValidationMessages {
   const t = useTranslations("Validation");
   return useMemo(
     () => ({
@@ -19,6 +21,7 @@ export function useValidationMessages(): JobValidationMessages {
       currency: t("currency"),
       salaryIncomplete: t("salaryIncomplete"),
       salaryRange: t("salaryRange"),
+      salaryTarget: t("salaryTarget"),
     }),
     [t],
   );

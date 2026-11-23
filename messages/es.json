@@ -41,7 +41,8 @@
     "wholeNumber": "Escribe una cantidad entera, sin puntos ni comas.",
     "currency": "Usa un código de 3 letras, como MXN o USD.",
     "salaryIncomplete": "Un salario necesita su moneda y su periodo.",
-    "salaryRange": "El máximo no puede ser menor que el mínimo."
+    "salaryRange": "El máximo no puede ser menor que el mínimo.",
+    "salaryTarget": "Indica el salario mínimo, la moneda y el periodo juntos, o deja los tres vacíos."
   },
   "SignIn": {
     "title": "Iniciar sesión",
@@ -193,7 +194,8 @@
       "unknown": "no lo dice",
       "not_comparable": "no comparable"
     },
-    "new": "Nueva vacante"
+    "new": "Nueva vacante",
+    "criteriaLink": "Criterios"
   },
   "JobForm": {
     "newTitle": "Nueva vacante",
@@ -281,6 +283,27 @@
       "cancel": "Cancelar",
       "confirm": "Borrar",
       "deleting": "Borrando…"
-    }
+    },
+    "editCriteria": "Cambiar tus criterios"
+  },
+  "Criteria": {
+    "back": "Vacantes",
+    "title": "Tus criterios",
+    "description": "Lo que buscas en un trabajo. Cada vacante muestra si lo cumple. Solo se guarda en tu cuenta.",
+    "salary": {
+      "title": "Salario",
+      "description": "Una vacante cumple si su tope llega a este mínimo, en la misma moneda y periodo. Déjalo vacío si no quieres compararlo.",
+      "minSalary": "Salario mínimo"
+    },
+    "workMode": {
+      "title": "Modalidad",
+      "remoteOnly": "Solo trabajos 100% remotos"
+    },
+    "contract": {
+      "title": "Tipo de contrato",
+      "description": "Marca los que aceptas. Si no marcas ninguno, cualquiera te sirve."
+    },
+    "save": "Guardar criterios",
+    "saved": "Criterios guardados"
   }
 }

@@ -41,7 +41,8 @@
     "wholeNumber": "Enter a whole amount, without dots or commas.",
     "currency": "Use a 3-letter code, such as MXN or USD.",
     "salaryIncomplete": "A salary needs its currency and period.",
-    "salaryRange": "The maximum cannot be lower than the minimum."
+    "salaryRange": "The maximum cannot be lower than the minimum.",
+    "salaryTarget": "Set the minimum salary, currency and period together, or leave all three empty."
   },
   "SignIn": {
     "title": "Sign in",
@@ -193,7 +194,8 @@
       "unknown": "not stated",
       "not_comparable": "not comparable"
     },
-    "new": "New job"
+    "new": "New job",
+    "criteriaLink": "Criteria"
   },
   "JobForm": {
     "newTitle": "New job",
@@ -281,6 +283,27 @@
       "cancel": "Cancel",
       "confirm": "Delete",
       "deleting": "Deleting…"
-    }
+    },
+    "editCriteria": "Change your criteria"
+  },
+  "Criteria": {
+    "back": "Jobs",
+    "title": "Your criteria",
+    "description": "What you look for in a job. Every job shows whether it meets it. Only your account keeps it.",
+    "salary": {
+      "title": "Salary",
+      "description": "A job meets it when the top of its range reaches this minimum, in the same currency and period. Leave it empty to skip it.",
+      "minSalary": "Minimum salary"
+    },
+    "workMode": {
+      "title": "Work mode",
+      "remoteOnly": "Fully remote jobs only"
+    },
+    "contract": {
+      "title": "Contract type",
+      "description": "Tick the ones you accept. With none ticked, any contract works."
+    },
+    "save": "Save criteria",
+    "saved": "Criteria saved"
   }
 }

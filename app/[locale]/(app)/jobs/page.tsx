@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Plus, SlidersHorizontal } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { CriteriaBadges } from "@/components/criteria-badges";
@@ -25,12 +25,20 @@ export default async function JobsPage({ searchParams }: { searchParams: SearchP
           <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
           <p className="text-sm text-muted-foreground">{t("description")}</p>
         </div>
-        <Button asChild>
-          <Link href="/jobs/new">
-            <Plus aria-hidden />
-            {t("new")}
-          </Link>
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild variant="outline">
+            <Link href="/criteria">
+              <SlidersHorizontal aria-hidden />
+              {t("criteriaLink")}
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link href="/jobs/new">
+              <Plus aria-hidden />
+              {t("new")}
+            </Link>
+          </Button>
+        </div>
       </div>
       {/* The filters come from the URL and the jobs from the session: both are request-time data. */}
       <Suspense fallback={null}>
