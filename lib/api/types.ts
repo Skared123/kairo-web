@@ -5,3 +5,20 @@ export type CurrentUser = paths["/auth/me"]["get"]["responses"][200]["content"][
 
 /** An account as the admin sees it, as `GET /admin/users` returns it. */
 export type Account = paths["/admin/users"]["get"]["responses"][200]["content"]["application/json"][number];
+
+/** A job as `GET /jobs` returns it, with how it compares with the user's criteria. */
+export type Job = paths["/jobs"]["get"]["responses"][200]["content"]["application/json"][number];
+export type JobStatus = Job["status"];
+export type JobSort = NonNullable<NonNullable<paths["/jobs"]["get"]["parameters"]["query"]>["sort"]>;
+
+/** Every stage, in the order a job usually moves through them (API decision 028). */
+export const JOB_STATUSES = [
+  "to_review",
+  "to_apply",
+  "applied",
+  "interviewing",
+  "offer",
+  "accepted",
+  "rejected",
+  "discarded",
+] as const satisfies readonly JobStatus[];

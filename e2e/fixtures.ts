@@ -44,6 +44,18 @@ export class Api {
     await user.dispose();
   }
 
+  /** Creates a job for the signed-in admin and returns its id. */
+  async createJob(fields: Record<string, unknown>): Promise<string> {
+    const res = await this.context.post("/jobs", { data: fields });
+    expect(res.status()).toBe(201);
+    return (await res.json()).id;
+  }
+
+  /** Saves the signed-in admin's criteria. */
+  async saveCriteria(criteria: Record<string, unknown>): Promise<void> {
+    expect((await this.context.put("/criteria", { data: criteria })).status()).toBe(200);
+  }
+
   dispose(): Promise<void> {
     return this.context.dispose();
   }

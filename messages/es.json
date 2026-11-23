@@ -10,7 +10,8 @@
     "signOut": "Cerrar sesión",
     "signingOut": "Cerrando…",
     "password": "Contraseña",
-    "admin": "Administración"
+    "admin": "Administración",
+    "jobs": "Vacantes"
   },
   "Preferences": {
     "darkTheme": "Tema oscuro",
@@ -141,5 +142,51 @@
   },
   "Common": {
     "close": "Cerrar"
+  },
+  "JobStatus": {
+    "to_review": "Por revisar",
+    "to_apply": "Por aplicar",
+    "applied": "Aplicada",
+    "interviewing": "Entrevistas",
+    "offer": "Oferta",
+    "accepted": "Aceptada",
+    "rejected": "Rechazada",
+    "discarded": "Descartada"
+  },
+  "Jobs": {
+    "title": "Vacantes",
+    "description": "Las vacantes que estás siguiendo, por etapa.",
+    "all": "Todas",
+    "search": {
+      "label": "Buscar por empresa o puesto",
+      "submit": "Buscar"
+    },
+    "sort": {
+      "label": "Ordenar por",
+      "updated": "Recientes",
+      "followUp": "Próximo seguimiento"
+    },
+    "columns": {
+      "company": "Empresa",
+      "title": "Puesto",
+      "status": "Etapa",
+      "followUp": "Seguimiento",
+      "criteria": "Tus criterios"
+    },
+    "empty": {
+      "none": "Aún no tienes vacantes.",
+      "filtered": "No hay vacantes que coincidan."
+    },
+    "criteria": {
+      "salary": "Salario",
+      "remote": "Remoto",
+      "contract": "Contrato"
+    },
+    "match": {
+      "meets": "cumple",
+      "misses": "no cumple",
+      "unknown": "no lo dice",
+      "not_comparable": "no comparable"
+    }
   }
 }

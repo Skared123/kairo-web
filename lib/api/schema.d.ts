@@ -148,6 +148,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["JobsController_list"];
+        put?: never;
+        post: operations["JobsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/jobs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["JobsController_findOne"];
+        put?: never;
+        post?: never;
+        delete: operations["JobsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["JobsController_update"];
+        trace?: never;
+    };
+    "/jobs/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["JobsController_changeStatus"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/jobs/{id}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["JobsController_history"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/criteria": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CriteriaController_get"];
+        put: operations["CriteriaController_save"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -591,6 +671,532 @@ export interface operations {
             };
             /** @description Account not found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    JobsController_list: {
+        parameters: {
+            query?: {
+                status?: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                q?: string;
+                sort?: "updated" | "followUp";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        company: string;
+                        title: string;
+                        url: string | null;
+                        /** @enum {string|null} */
+                        source: "linkedin" | "referral" | "company_site" | "job_board" | "recruiter" | "other" | null;
+                        /** @enum {string|null} */
+                        workMode: "remote" | "hybrid" | "onsite" | null;
+                        location: string | null;
+                        timeZoneNotes: string | null;
+                        /** @enum {string|null} */
+                        contractType: "employee" | "contractor" | null;
+                        salaryMin: number | null;
+                        salaryMax: number | null;
+                        salaryCurrency: string | null;
+                        /** @enum {string|null} */
+                        salaryPeriod: "month" | "year" | null;
+                        description: string | null;
+                        notes: string | null;
+                        /** @enum {string} */
+                        status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        criteria: {
+                            /** @enum {string|null} */
+                            salary: "meets" | "misses" | "unknown" | "not_comparable" | null;
+                            /** @enum {string|null} */
+                            remote: "meets" | "misses" | "unknown" | null;
+                            /** @enum {string|null} */
+                            contract: "meets" | "misses" | "unknown" | null;
+                        };
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    }[];
+                };
+            };
+        };
+    };
+    JobsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    company: string;
+                    title: string;
+                    /** Format: uri */
+                    url?: string | null;
+                    /** @enum {string|null} */
+                    source?: "linkedin" | "referral" | "company_site" | "job_board" | "recruiter" | "other" | null;
+                    /** @enum {string|null} */
+                    workMode?: "remote" | "hybrid" | "onsite" | null;
+                    location?: string | null;
+                    timeZoneNotes?: string | null;
+                    /** @enum {string|null} */
+                    contractType?: "employee" | "contractor" | null;
+                    salaryMin?: number | null;
+                    salaryMax?: number | null;
+                    salaryCurrency?: string | null;
+                    /** @enum {string|null} */
+                    salaryPeriod?: "month" | "year" | null;
+                    description?: string | null;
+                    notes?: string | null;
+                    /** Format: date */
+                    nextFollowUpOn?: string | null;
+                    nextFollowUpNote?: string | null;
+                    /** @enum {string} */
+                    status?: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        company: string;
+                        title: string;
+                        url: string | null;
+                        /** @enum {string|null} */
+                        source: "linkedin" | "referral" | "company_site" | "job_board" | "recruiter" | "other" | null;
+                        /** @enum {string|null} */
+                        workMode: "remote" | "hybrid" | "onsite" | null;
+                        location: string | null;
+                        timeZoneNotes: string | null;
+                        /** @enum {string|null} */
+                        contractType: "employee" | "contractor" | null;
+                        salaryMin: number | null;
+                        salaryMax: number | null;
+                        salaryCurrency: string | null;
+                        /** @enum {string|null} */
+                        salaryPeriod: "month" | "year" | null;
+                        description: string | null;
+                        notes: string | null;
+                        /** @enum {string} */
+                        status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        criteria: {
+                            /** @enum {string|null} */
+                            salary: "meets" | "misses" | "unknown" | "not_comparable" | null;
+                            /** @enum {string|null} */
+                            remote: "meets" | "misses" | "unknown" | null;
+                            /** @enum {string|null} */
+                            contract: "meets" | "misses" | "unknown" | null;
+                        };
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                        possibleDuplicates: {
+                            /** Format: uuid */
+                            id: string;
+                            company: string;
+                            title: string;
+                            url: string | null;
+                            /** @enum {string} */
+                            status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        }[];
+                    };
+                };
+            };
+            /** @description Invalid fields, or a salary without its currency and period */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    JobsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        company: string;
+                        title: string;
+                        url: string | null;
+                        /** @enum {string|null} */
+                        source: "linkedin" | "referral" | "company_site" | "job_board" | "recruiter" | "other" | null;
+                        /** @enum {string|null} */
+                        workMode: "remote" | "hybrid" | "onsite" | null;
+                        location: string | null;
+                        timeZoneNotes: string | null;
+                        /** @enum {string|null} */
+                        contractType: "employee" | "contractor" | null;
+                        salaryMin: number | null;
+                        salaryMax: number | null;
+                        salaryCurrency: string | null;
+                        /** @enum {string|null} */
+                        salaryPeriod: "month" | "year" | null;
+                        description: string | null;
+                        notes: string | null;
+                        /** @enum {string} */
+                        status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        criteria: {
+                            /** @enum {string|null} */
+                            salary: "meets" | "misses" | "unknown" | "not_comparable" | null;
+                            /** @enum {string|null} */
+                            remote: "meets" | "misses" | "unknown" | null;
+                            /** @enum {string|null} */
+                            contract: "meets" | "misses" | "unknown" | null;
+                        };
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+            /** @description Job not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    JobsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Job not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    JobsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    company?: string;
+                    title?: string;
+                    /** Format: uri */
+                    url?: string | null;
+                    /** @enum {string|null} */
+                    source?: "linkedin" | "referral" | "company_site" | "job_board" | "recruiter" | "other" | null;
+                    /** @enum {string|null} */
+                    workMode?: "remote" | "hybrid" | "onsite" | null;
+                    location?: string | null;
+                    timeZoneNotes?: string | null;
+                    /** @enum {string|null} */
+                    contractType?: "employee" | "contractor" | null;
+                    salaryMin?: number | null;
+                    salaryMax?: number | null;
+                    salaryCurrency?: string | null;
+                    /** @enum {string|null} */
+                    salaryPeriod?: "month" | "year" | null;
+                    description?: string | null;
+                    notes?: string | null;
+                    /** Format: date */
+                    nextFollowUpOn?: string | null;
+                    nextFollowUpNote?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        company: string;
+                        title: string;
+                        url: string | null;
+                        /** @enum {string|null} */
+                        source: "linkedin" | "referral" | "company_site" | "job_board" | "recruiter" | "other" | null;
+                        /** @enum {string|null} */
+                        workMode: "remote" | "hybrid" | "onsite" | null;
+                        location: string | null;
+                        timeZoneNotes: string | null;
+                        /** @enum {string|null} */
+                        contractType: "employee" | "contractor" | null;
+                        salaryMin: number | null;
+                        salaryMax: number | null;
+                        salaryCurrency: string | null;
+                        /** @enum {string|null} */
+                        salaryPeriod: "month" | "year" | null;
+                        description: string | null;
+                        notes: string | null;
+                        /** @enum {string} */
+                        status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        criteria: {
+                            /** @enum {string|null} */
+                            salary: "meets" | "misses" | "unknown" | "not_comparable" | null;
+                            /** @enum {string|null} */
+                            remote: "meets" | "misses" | "unknown" | null;
+                            /** @enum {string|null} */
+                            contract: "meets" | "misses" | "unknown" | null;
+                        };
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+            /** @description Job not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    JobsController_changeStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        company: string;
+                        title: string;
+                        url: string | null;
+                        /** @enum {string|null} */
+                        source: "linkedin" | "referral" | "company_site" | "job_board" | "recruiter" | "other" | null;
+                        /** @enum {string|null} */
+                        workMode: "remote" | "hybrid" | "onsite" | null;
+                        location: string | null;
+                        timeZoneNotes: string | null;
+                        /** @enum {string|null} */
+                        contractType: "employee" | "contractor" | null;
+                        salaryMin: number | null;
+                        salaryMax: number | null;
+                        salaryCurrency: string | null;
+                        /** @enum {string|null} */
+                        salaryPeriod: "month" | "year" | null;
+                        description: string | null;
+                        notes: string | null;
+                        /** @enum {string} */
+                        status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        criteria: {
+                            /** @enum {string|null} */
+                            salary: "meets" | "misses" | "unknown" | "not_comparable" | null;
+                            /** @enum {string|null} */
+                            remote: "meets" | "misses" | "unknown" | null;
+                            /** @enum {string|null} */
+                            contract: "meets" | "misses" | "unknown" | null;
+                        };
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+            /** @description Job not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    JobsController_history: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string|null} */
+                        fromStatus: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded" | null;
+                        /** @enum {string} */
+                        toStatus: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        /** Format: date-time */
+                        changedAt: string;
+                    }[];
+                };
+            };
+            /** @description Job not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CriteriaController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        minSalary: number | null;
+                        currency: string | null;
+                        /** @enum {string|null} */
+                        period: "month" | "year" | null;
+                        remoteOnly: boolean;
+                        contractTypes: ("employee" | "contractor")[];
+                    };
+                };
+            };
+        };
+    };
+    CriteriaController_save: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    minSalary: number | null;
+                    currency: string | null;
+                    /** @enum {string|null} */
+                    period: "month" | "year" | null;
+                    remoteOnly: boolean;
+                    contractTypes: ("employee" | "contractor")[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        minSalary: number | null;
+                        currency: string | null;
+                        /** @enum {string|null} */
+                        period: "month" | "year" | null;
+                        remoteOnly: boolean;
+                        contractTypes: ("employee" | "contractor")[];
+                    };
+                };
+            };
+            /** @description A target salary without its currency and period, or invalid fields */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };

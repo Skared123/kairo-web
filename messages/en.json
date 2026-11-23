@@ -10,7 +10,8 @@
     "signOut": "Sign out",
     "signingOut": "Signing out…",
     "password": "Password",
-    "admin": "Admin"
+    "admin": "Admin",
+    "jobs": "Jobs"
   },
   "Preferences": {
     "darkTheme": "Dark theme",
@@ -141,5 +142,51 @@
   },
   "Common": {
     "close": "Close"
+  },
+  "JobStatus": {
+    "to_review": "To review",
+    "to_apply": "To apply",
+    "applied": "Applied",
+    "interviewing": "Interviewing",
+    "offer": "Offer",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "discarded": "Discarded"
+  },
+  "Jobs": {
+    "title": "Jobs",
+    "description": "The jobs you are following, by stage.",
+    "all": "All",
+    "search": {
+      "label": "Search by company or title",
+      "submit": "Search"
+    },
+    "sort": {
+      "label": "Sort by",
+      "updated": "Recent",
+      "followUp": "Next follow-up"
+    },
+    "columns": {
+      "company": "Company",
+      "title": "Title",
+      "status": "Stage",
+      "followUp": "Follow-up",
+      "criteria": "Your criteria"
+    },
+    "empty": {
+      "none": "You have no jobs yet.",
+      "filtered": "No jobs match."
+    },
+    "criteria": {
+      "salary": "Salary",
+      "remote": "Remote",
+      "contract": "Contract"
+    },
+    "match": {
+      "meets": "meets",
+      "misses": "misses",
+      "unknown": "not stated",
+      "not_comparable": "not comparable"
+    }
   }
 }
