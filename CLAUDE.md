@@ -39,3 +39,6 @@ The product docs live in the API repo, cloned next to this one (`../kairo-api`, 
 - pnpm only (10 or later); never npm or yarn. `pnpm-workspace.yaml` lists the dependency install scripts that were
   reviewed; explain any new one before approving it.
 - Lint is ESLint with the Next.js rules (`pnpm lint`).
+- Tests (decision 027): Vitest for pure logic (`lib/**/*.test.ts`, `pnpm test`) and Playwright for user flows
+  (`e2e/`, `pnpm test:e2e`). Every new screen gets an end-to-end test. The E2E run starts its own API (4100) and web
+  build (3100, `.next-e2e`) on `kairo_test`, so never point it at a real database or reuse `pnpm dev`.

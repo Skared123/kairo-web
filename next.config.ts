@@ -8,6 +8,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 const apiUrl = process.env.API_URL ?? "http://localhost:4000";
 
 const nextConfig: NextConfig = {
+  // The end-to-end tests build into their own folder, so they never touch a running `pnpm dev` (decision 027).
+  distDir: process.env.NEXT_DIST_DIR ?? ".next",
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

@@ -11,7 +11,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "api:types": "openapi-typescript ${API_URL:-http://localhost:4000}/docs/openapi.json -o lib/api/schema.d.ts"
+    "api:types": "openapi-typescript ${API_URL:-http://localhost:4000}/docs/openapi.json -o lib/api/schema.d.ts",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.7",
@@ -31,15 +33,19 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/node": "^22.0.0",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "openapi-typescript": "^7.13.0",
+    "pg": "^8.23.1",
     "tailwindcss": "4.3.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^5.1.1"
   },
   "packageManager": "pnpm@11.8.0",
   "description": "Kairo web app: the UI of the Kairo job search companion. Talks to kairo-api."
