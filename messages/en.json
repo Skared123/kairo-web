@@ -306,7 +306,6 @@
   "Today": {
     "title": "Today",
     "greeting": "Hi, {name}. Here's what's on your plate.",
-    "followUp": "Follow-up",
     "sections": {
       "overdue": "Overdue",
       "today": "Today",
@@ -351,5 +350,23 @@
       "deleting": "Deleting…"
     },
     "jobNotFound": "That job no longer exists. Pick another one."
+  },
+  "FollowUps": {
+    "label": "Follow-up",
+    "done": {
+      "button": "Done",
+      "label": "Done: follow-up with {job}"
+    },
+    "postpone": {
+      "button": "Postpone",
+      "label": "Postpone the follow-up with {job}",
+      "title": "Postpone the follow-up",
+      "description": "{job}. Now due {day}.",
+      "in": "{days, plural, =1 {Tomorrow} =7 {In a week} other {In # days}}",
+      "otherDay": "Another day",
+      "save": "Postpone",
+      "saving": "Saving…",
+      "notBeforeToday": "Pick today or a later day."
+    }
   }
 }

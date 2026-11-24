@@ -1,9 +1,9 @@
 "use client";
 
-import { ChevronRight, Reply } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useId, useSyncExternalStore, type ReactNode } from "react";
-import { JobLink, Meta } from "@/components/tasks/item-parts";
+import { FollowUpLine } from "@/components/follow-ups/follow-up-line";
 import type { JobOption } from "@/components/tasks/job-option";
 import { QuickAddTask } from "@/components/tasks/quick-add-task";
 import { TaskLine } from "@/components/tasks/task-line";
@@ -27,7 +27,7 @@ export function TodayView({ data, jobs }: { data: Today; jobs: JobOption[] }) {
     return null;
   }
   const sections = groupToday(data, today);
-  const dayLabel = (day: string) => formatShortDay(day, locale);
+  const context: SectionContext = { jobs, today, dayLabel: (day) => formatShortDay(day, locale) };
   const nothingOpen =
     sections.overdue.length + sections.today.length + sections.upcoming.length + sections.later.length +
       sections.noDate.length ===
@@ -48,32 +48,35 @@ export function TodayView({ data, jobs }: { data: Today; jobs: JobOption[] }) {
         </div>
       )}
 
-      <Section title={t("sections.overdue")} items={sections.overdue} jobs={jobs} danger dayLabel={dayLabel} />
-      <Section title={t("sections.today")} items={sections.today} jobs={jobs} />
-      <Section title={t("sections.upcoming")} items={sections.upcoming} jobs={jobs} dayLabel={dayLabel} />
-      <Section title={t("sections.noDate")} items={sections.noDate} jobs={jobs} />
-      <Section title={t("sections.later")} items={sections.later} jobs={jobs} dayLabel={dayLabel} collapsed />
+      <Section title={t("sections.overdue")} items={sections.overdue} context={context} danger showDay />
+      <Section title={t("sections.today")} items={sections.today} context={context} />
+      <Section title={t("sections.upcoming")} items={sections.upcoming} context={context} showDay />
+      <Section title={t("sections.noDate")} items={sections.noDate} context={context} />
+      <Section title={t("sections.later")} items={sections.later} context={context} showDay collapsed />
       <DoneToday tasks={sections.doneToday} jobs={jobs} />
     </div>
   );
 }
 
+/** What every line needs: the job options for tasks, the browser's day and how a day reads. */
+type SectionContext = { jobs: JobOption[]; today: string; dayLabel: (day: string) => string };
+
 /** One section with its count; left out when empty. A collapsed one opens on a click. */
 function Section({
   title,
   items,
-  jobs,
+  context: { jobs, today, dayLabel },
   danger,
   collapsed,
-  dayLabel,
+  showDay,
 }: {
   title: string;
   items: TodayItem[];
-  jobs: JobOption[];
+  context: SectionContext;
   danger?: boolean;
   collapsed?: boolean;
-  /** How each item shows its day; without it, the section's title says it all (Today, No date). */
-  dayLabel?: (day: string) => string;
+  /** Whether each item shows its day; not where the section's title says it all (Today, No date). */
+  showDay?: boolean;
 }) {
   if (items.length === 0) {
     return null;
@@ -82,9 +85,20 @@ function Section({
     <ul className="divide-y rounded-lg border">
       {items.map((item) =>
         item.kind === "task" ? (
-          <TaskLine key={item.task.id} task={item.task} jobs={jobs} day={item.day && dayLabel?.(item.day)} />
+          <TaskLine
+            key={item.task.id}
+            task={item.task}
+            jobs={jobs}
+            day={showDay && item.day ? dayLabel(item.day) : null}
+          />
         ) : (
-          <FollowUpLine key={`follow-up-${item.followUp.job.id}`} item={item} day={dayLabel?.(item.day)} />
+          <FollowUpLine
+            key={`follow-up-${item.followUp.job.id}`}
+            followUp={item.followUp}
+            day={showDay ? dayLabel(item.day) : undefined}
+            today={today}
+            dayLabel={dayLabel}
+          />
         ),
       )}
     </ul>
@@ -150,25 +164,6 @@ function SectionFrame({
       {heading}
       {children}
     </section>
-  );
-}
-
-function FollowUpLine({ item, day }: { item: Extract<TodayItem, { kind: "followUp" }>; day?: string }) {
-  const t = useTranslations("Today");
-  const { followUp } = item;
-  return (
-    <li className="flex items-start gap-3 px-4 py-3">
-      <Reply className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden />
-      <div className="flex min-w-0 flex-col gap-0.5">
-        <span className="text-sm">
-          {t("followUp")}: <JobLink job={followUp.job} />
-        </span>
-        <Meta>
-          {followUp.note}
-          {day}
-        </Meta>
-      </div>
-    </li>
   );
 }
 

@@ -306,7 +306,6 @@
   "Today": {
     "title": "Hoy",
     "greeting": "Hola, {name}. Esto es lo que te toca.",
-    "followUp": "Seguimiento",
     "sections": {
       "overdue": "Atrasado",
       "today": "Hoy",
@@ -351,5 +350,23 @@
       "deleting": "Borrando…"
     },
     "jobNotFound": "Esa vacante ya no existe. Elige otra."
+  },
+  "FollowUps": {
+    "label": "Seguimiento",
+    "done": {
+      "button": "Hecho",
+      "label": "Hecho: seguimiento de {job}"
+    },
+    "postpone": {
+      "button": "Posponer",
+      "label": "Posponer el seguimiento de {job}",
+      "title": "Posponer el seguimiento",
+      "description": "{job}. Ahora toca el {day}.",
+      "in": "{days, plural, =1 {Mañana} =7 {En una semana} other {En # días}}",
+      "otherDay": "Otro día",
+      "save": "Posponer",
+      "saving": "Guardando…",
+      "notBeforeToday": "Elige hoy o un día después."
+    }
   }
 }

@@ -1,12 +1,4 @@
-import { ADMIN, expect, signIn, test } from "./fixtures";
-
-/** A calendar day `offset` days from today, in this machine's time zone: the browser's, as Today reads it. */
-function day(offset: number): string {
-  const date = new Date();
-  date.setDate(date.getDate() + offset);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-}
+import { ADMIN, day, expect, signIn, test } from "./fixtures";
 
 test("is the home page, with an invitation when nothing is pending", async ({ page, api }) => {
   await api.setupAdmin();

@@ -5,6 +5,14 @@ import { resetDatabase, testDatabaseUrl } from "./test-database";
 
 export { expect };
 
+/** A calendar day `offset` days from today, in this machine's time zone: the browser's, as Today reads it. */
+export function day(offset: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() + offset);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
 export const ADMIN = { name: "Ada Lovelace", email: "ada@example.com", password: "abc123" };
 
 /** Every test starts from a fresh install: an empty kairo_test. */
