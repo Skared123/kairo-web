@@ -50,8 +50,11 @@ test("sets, changes and clears the next follow-up", async ({ page, api }) => {
 
   // Set it.
   await main.getByRole("link", { name: "Editar" }).click();
-  await page.getByLabel("Fecha", { exact: true }).fill("2026-12-15");
-  await page.getByLabel("Qué hacer", { exact: true }).fill("Preguntar por la segunda entrevista");
+  // The detail has a task's own "Fecha" field and stays mounted, hidden: wait for the form, then look in the
+  // visible page only.
+  await expect(main.getByRole("heading", { name: "Editar vacante" })).toBeVisible();
+  await main.getByLabel("Fecha", { exact: true }).fill("2026-12-15");
+  await main.getByLabel("Qué hacer", { exact: true }).fill("Preguntar por la segunda entrevista");
   await page.getByRole("button", { name: "Guardar cambios" }).click();
   await expect(main.getByText("15 dic 2026")).toBeVisible();
   await expect(main.getByText("Preguntar por la segunda entrevista")).toBeVisible();

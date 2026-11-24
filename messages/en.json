@@ -276,12 +276,17 @@
     "delete": {
       "button": "Delete",
       "title": "Delete {name}?",
-      "description": "The job and its whole history will be deleted. This cannot be undone.",
+      "description": "The job and its whole history will be deleted. Its tasks stay, without a job. This cannot be undone.",
       "cancel": "Cancel",
       "confirm": "Delete",
       "deleting": "Deleting…"
     },
-    "editCriteria": "Change your criteria"
+    "editCriteria": "Change your criteria",
+    "tasks": {
+      "title": "Tasks",
+      "empty": "No tasks for this job yet.",
+      "done": "Done · {count}"
+    }
   },
   "Criteria": {
     "back": "Jobs",

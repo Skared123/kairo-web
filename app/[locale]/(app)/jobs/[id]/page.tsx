@@ -6,15 +6,18 @@ import { ClientDate } from "@/components/client-date";
 import { CriteriaBadges } from "@/components/criteria-badges";
 import { JobStatusBadge } from "@/components/job-status-badge";
 import { Button } from "@/components/ui/button";
+import { toJobOptions } from "@/components/tasks/job-option";
 import { Link } from "@/i18n/navigation";
-import { getJob, getJobHistory } from "@/lib/api/jobs";
+import { getJob, getJobHistory, listJobs } from "@/lib/api/jobs";
+import { listTasks } from "@/lib/api/tasks";
 import { requireUser } from "@/lib/auth";
 import { formatDay } from "@/lib/format-day";
 import { formatSalary } from "@/lib/format-salary";
 import { DeleteJob } from "./delete-job";
+import { JobTasks } from "./job-tasks";
 import { StageSelect } from "./stage-select";
 
-/** One job: everything saved about it, its stage and history, and its next follow-up. */
+/** One job: everything saved about it, its stage and history, its next follow-up and its tasks. */
 export default function JobPage({ params }: { params: Promise<{ id: string }> }) {
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 p-6">
@@ -34,8 +37,11 @@ async function JobDetail({ params }: { params: Promise<{ id: string }> }) {
     // Missing, or another user's: the API answers 404 to both, and so does this page.
     notFound();
   }
-  const [history, t, form, stages, locale] = await Promise.all([
+  // Every job, for moving a task to another one from its edit dialog.
+  const [history, tasks, jobs, t, form, stages, locale] = await Promise.all([
     getJobHistory(id),
+    listTasks({ jobId: id }),
+    listJobs({}),
     getTranslations("JobDetail"),
     getTranslations("JobForm"),
     getTranslations("JobStatus"),
@@ -94,6 +100,10 @@ async function JobDetail({ params }: { params: Promise<{ id: string }> }) {
               </Detail>
               <Detail label={form("fields.source")}>{job.source && form(`options.source.${job.source}`)}</Detail>
             </dl>
+          </Section>
+
+          <Section id={`tasks-${job.id}`} title={t("tasks.title")}>
+            <JobTasks jobId={job.id} tasks={tasks} jobs={toJobOptions(jobs)} locale={locale} />
           </Section>
 
           <Section title={form("fields.description")}>
@@ -160,10 +170,13 @@ async function JobDetail({ params }: { params: Promise<{ id: string }> }) {
   );
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+/** A titled block; with an `id`, its heading names it, so it reads as a region. */
+function Section({ id, title, children }: { id?: string; title: string; children: ReactNode }) {
   return (
-    <section className="flex flex-col gap-3">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{title}</h2>
+    <section aria-labelledby={id} className="flex flex-col gap-3">
+      <h2 id={id} className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        {title}
+      </h2>
       {children}
     </section>
   );

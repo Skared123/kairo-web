@@ -276,12 +276,17 @@
     "delete": {
       "button": "Borrar",
       "title": "¿Borrar {name}?",
-      "description": "Se borrará la vacante con todo su historial. No se puede deshacer.",
+      "description": "Se borrará la vacante con todo su historial. Sus tareas se quedan, sin vacante. No se puede deshacer.",
       "cancel": "Cancelar",
       "confirm": "Borrar",
       "deleting": "Borrando…"
     },
-    "editCriteria": "Cambiar tus criterios"
+    "editCriteria": "Cambiar tus criterios",
+    "tasks": {
+      "title": "Tareas",
+      "empty": "Todavía no hay tareas para esta vacante.",
+      "done": "Terminadas · {count}"
+    }
   },
   "Criteria": {
     "back": "Vacantes",
