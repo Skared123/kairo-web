@@ -25,3 +25,10 @@ export const JOB_STATUSES = [
   "rejected",
   "discarded",
 ] as const satisfies readonly JobStatus[];
+
+/** A task as the API returns it, with its job's company and title when it has one (API decision 033). */
+export type Task = paths["/tasks"]["get"]["responses"][200]["content"]["application/json"][number];
+
+/** Everything Today shows, as `GET /today` returns it: not filtered by day (API decision 035). */
+export type Today = paths["/today"]["get"]["responses"][200]["content"]["application/json"];
+export type FollowUp = Today["followUps"][number];

@@ -1,24 +1,32 @@
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { getToday } from "@/lib/api/today";
 import { requireUser } from "@/lib/auth";
+import { TodayView } from "./today-view";
 
-/** Home: a placeholder until Today (v0.3). */
-export default function Home() {
-  const t = useTranslations("Home");
+/** Today (API decision 034): the tasks and follow-ups to act on, in one screen. It is the home page. */
+export default function TodayPage() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-3 p-8">
-      {/* Reads the session, so it streams in after the rest of the page. */}
-      <Suspense fallback={<h1 className="text-3xl font-semibold tracking-tight">Kairo</h1>}>
-        <Greeting />
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-6">
+      {/* The session and the user's items: request-time data. */}
+      <Suspense fallback={null}>
+        <TodayContent />
       </Suspense>
-      <p className="text-muted-foreground">{t("comingSoon")}</p>
     </main>
   );
 }
 
-async function Greeting() {
-  const t = await getTranslations("Home");
+async function TodayContent() {
+  const t = await getTranslations("Today");
   const user = await requireUser();
-  return <h1 className="text-3xl font-semibold tracking-tight">{t("greeting", { name: user.name })}</h1>;
+  const today = await getToday();
+  return (
+    <>
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
+        <p className="text-sm text-muted-foreground">{t("greeting", { name: user.name })}</p>
+      </div>
+      <TodayView data={today} />
+    </>
+  );
 }

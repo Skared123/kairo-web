@@ -2,16 +2,13 @@
   "Metadata": {
     "description": "Job search companion: track applications, get prepared, and act on the right opportunity in time."
   },
-  "Home": {
-    "greeting": "Hi, {name}",
-    "comingSoon": "Soon you will see what to do today here."
-  },
   "AppHeader": {
     "signOut": "Sign out",
     "signingOut": "Signing out…",
     "password": "Password",
     "admin": "Admin",
-    "jobs": "Jobs"
+    "jobs": "Jobs",
+    "today": "Today"
   },
   "Preferences": {
     "darkTheme": "Dark theme",
@@ -305,5 +302,23 @@
     },
     "save": "Save criteria",
     "saved": "Criteria saved"
+  },
+  "Today": {
+    "title": "Today",
+    "greeting": "Hi, {name}. Here's what's on your plate.",
+    "followUp": "Follow-up",
+    "sections": {
+      "overdue": "Overdue",
+      "today": "Today",
+      "upcoming": "Next 7 days",
+      "noDate": "No date",
+      "later": "Later",
+      "doneToday": "Done today"
+    },
+    "empty": {
+      "title": "Nothing pending",
+      "description": "Add a task, or set a follow-up on one of your jobs.",
+      "jobs": "Go to jobs"
+    }
   }
 }

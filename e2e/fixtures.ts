@@ -63,6 +63,18 @@ export class Api {
     expect((await this.context.delete(`/jobs/${id}`)).status()).toBe(204);
   }
 
+  /** Creates a task for the signed-in admin and returns its id. */
+  async createTask(fields: Record<string, unknown>): Promise<string> {
+    const res = await this.context.post("/tasks", { data: fields });
+    expect(res.status()).toBe(201);
+    return (await res.json()).id;
+  }
+
+  /** Changes one of the signed-in admin's tasks, such as `{ done: true }`. */
+  async updateTask(id: string, changes: Record<string, unknown>): Promise<void> {
+    expect((await this.context.patch(`/tasks/${id}`, { data: changes })).status()).toBe(200);
+  }
+
   /** Saves the signed-in admin's criteria. */
   async saveCriteria(criteria: Record<string, unknown>): Promise<void> {
     expect((await this.context.put("/criteria", { data: criteria })).status()).toBe(200);

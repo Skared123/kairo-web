@@ -1,4 +1,4 @@
-import { Briefcase, KeyRound, Users } from "lucide-react";
+import { Briefcase, CalendarCheck, KeyRound, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
@@ -36,6 +36,12 @@ async function SignedInAs() {
   const user = await requireUser({ allowPendingPasswordChange: true });
   return (
     <div className="flex items-center gap-2">
+      <Button asChild variant="ghost" size="sm">
+        <Link href="/">
+          <CalendarCheck aria-hidden />
+          {t("today")}
+        </Link>
+      </Button>
       <Button asChild variant="ghost" size="sm">
         <Link href="/jobs">
           <Briefcase aria-hidden />

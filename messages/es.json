@@ -2,16 +2,13 @@
   "Metadata": {
     "description": "Compañero de búsqueda de empleo: da seguimiento a tus postulaciones, prepárate y actúa a tiempo en la oportunidad correcta."
   },
-  "Home": {
-    "greeting": "Hola, {name}",
-    "comingSoon": "Pronto verás aquí lo que te toca hacer hoy."
-  },
   "AppHeader": {
     "signOut": "Cerrar sesión",
     "signingOut": "Cerrando…",
     "password": "Contraseña",
     "admin": "Administración",
-    "jobs": "Vacantes"
+    "jobs": "Vacantes",
+    "today": "Hoy"
   },
   "Preferences": {
     "darkTheme": "Tema oscuro",
@@ -305,5 +302,23 @@
     },
     "save": "Guardar criterios",
     "saved": "Criterios guardados"
+  },
+  "Today": {
+    "title": "Hoy",
+    "greeting": "Hola, {name}. Esto es lo que te toca.",
+    "followUp": "Seguimiento",
+    "sections": {
+      "overdue": "Atrasado",
+      "today": "Hoy",
+      "upcoming": "Próximos 7 días",
+      "noDate": "Sin fecha",
+      "later": "Más adelante",
+      "doneToday": "Terminadas hoy"
+    },
+    "empty": {
+      "title": "No tienes pendientes",
+      "description": "Agrega una tarea o ponle un seguimiento a una de tus vacantes.",
+      "jobs": "Ir a vacantes"
+    }
   }
 }

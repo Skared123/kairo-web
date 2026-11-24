@@ -59,7 +59,7 @@ test("keeps the admin screen from other users", async ({ page, api }) => {
   await api.choosePassword("grace@example.com", temporary, "abc123");
 
   await signIn(page, "grace@example.com", "abc123");
-  await expect(page.getByRole("heading", { name: "Hola, Grace Hopper" })).toBeVisible();
+  await expect(page.getByText("Hola, Grace Hopper.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Administración" })).toHaveCount(0);
 
   await page.goto("/es/admin/users");

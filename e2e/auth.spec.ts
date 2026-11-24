@@ -11,7 +11,7 @@ test("first run: setup creates the admin and signs them in", async ({ page, api 
   await page.getByLabel("Contraseña").fill(ADMIN.password);
   await page.getByRole("button", { name: "Crear cuenta" }).click();
 
-  await expect(page.getByRole("heading", { name: `Hola, ${ADMIN.name}` })).toBeVisible();
+  await expect(page.getByText(`Hola, ${ADMIN.name}.`)).toBeVisible();
   // Setup happens once: afterwards it sends you on.
   await page.goto("/es/setup");
   await expect(page).toHaveURL(/\/es$/);
@@ -35,7 +35,7 @@ test("signs in, refuses a wrong password, and signs out", async ({ page, api }) 
 
   await page.getByLabel("Contraseña").fill(ADMIN.password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
-  await expect(page.getByRole("heading", { name: `Hola, ${ADMIN.name}` })).toBeVisible();
+  await expect(page.getByText(`Hola, ${ADMIN.name}.`)).toBeVisible();
 
   // Signed in, the sign-in screen sends you home.
   await page.goto("/es/sign-in");

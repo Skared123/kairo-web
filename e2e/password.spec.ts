@@ -22,7 +22,7 @@ test("an account with a temporary password must change it first", async ({ page,
 
   await page.getByLabel("Contraseña actual").fill(temporary);
   await page.getByRole("button", { name: "Cambiar contraseña" }).click();
-  await expect(page.getByRole("heading", { name: `Hola, ${GRACE.name}` })).toBeVisible();
+  await expect(page.getByText(`Hola, ${GRACE.name}.`)).toBeVisible();
 });
 
 test("explains an expired temporary password", async ({ page, api }) => {

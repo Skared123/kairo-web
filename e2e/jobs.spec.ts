@@ -3,7 +3,7 @@ import { ADMIN, expect, signIn, test } from "./fixtures";
 test("shows an empty list before the first job", async ({ page, api }) => {
   await api.setupAdmin();
   await signIn(page, ADMIN.email, ADMIN.password);
-  await page.getByRole("link", { name: "Vacantes" }).click();
+  await page.getByRole("link", { name: "Vacantes", exact: true }).click();
 
   await expect(page.getByRole("heading", { name: "Vacantes" })).toBeVisible();
   await expect(page.getByText("Aún no tienes vacantes.")).toBeVisible();
