@@ -44,6 +44,11 @@ export function TaskLine({
         params: { path: { id: task.id } },
         body: { done: next },
       });
+      // 404: deleted in another tab; the refresh takes it away, like a delete does.
+      if (response.status === 404) {
+        router.refresh();
+        return;
+      }
       if (!response.ok) {
         setDone(!next);
         setError(validation("unexpected"));

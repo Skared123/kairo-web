@@ -90,6 +90,11 @@ export class Api {
     expect((await this.context.patch(`/tasks/${id}`, { data: changes })).status()).toBe(200);
   }
 
+  /** Deletes one of the signed-in admin's tasks, as another tab would. */
+  async deleteTask(id: string): Promise<void> {
+    expect((await this.context.delete(`/tasks/${id}`)).status()).toBe(204);
+  }
+
   /** Saves the signed-in admin's criteria. */
   async saveCriteria(criteria: Record<string, unknown>): Promise<void> {
     expect((await this.context.put("/criteria", { data: criteria })).status()).toBe(200);

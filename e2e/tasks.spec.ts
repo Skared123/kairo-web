@@ -48,6 +48,37 @@ test("marks a task done and opens it again", async ({ page, api }) => {
   expect((await api.getTask(id)).doneAt).toBeNull();
 });
 
+test("undoes the check and says so when saving fails", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createTask({ title: "Mandar el CV actualizado", dueOn: day(0) });
+  await signIn(page, ADMIN.email, ADMIN.password);
+
+  // The API is down for this request only.
+  await page.route("**/api/tasks/*", (route) =>
+    route.request().method() === "PATCH" ? route.fulfill({ status: 500 }) : route.fallback(),
+  );
+  const checkbox = page.getByRole("checkbox", { name: "Marcar como hecha: Mandar el CV actualizado" });
+  await checkbox.click();
+
+  await expect(page.getByText("Algo salió mal. Intenta de nuevo.")).toBeVisible();
+  await expect(checkbox).not.toBeChecked();
+  await expect(section(page, /^Hoy · 1$/)).toContainText("Mandar el CV actualizado");
+  expect((await api.getTask(id)).doneAt).toBeNull();
+});
+
+test("takes away a task deleted in another tab when it is checked", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createTask({ title: "Mandar el CV actualizado", dueOn: day(0) });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await expect(section(page, /^Hoy · 1$/)).toBeVisible();
+
+  await api.deleteTask(id);
+  await page.getByRole("checkbox", { name: "Marcar como hecha: Mandar el CV actualizado" }).click();
+
+  await expect(page.getByText("No tienes pendientes")).toBeVisible();
+  await expect(page.getByText("Algo salió mal. Intenta de nuevo.")).toHaveCount(0);
+});
+
 test("edits a task in a dialog", async ({ page, api }) => {
   await api.setupAdmin();
   const job = await api.createJob({ company: "Acme Robotics", title: "Senior Fullstack Engineer" });

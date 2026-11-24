@@ -95,3 +95,20 @@ test("leaves the follow-up untouched when the dialog is closed", async ({ page, 
   await expect(section(page, /^Hoy · 1$/)).toContainText(JOB);
   expect(await api.getJob(job)).toMatchObject({ nextFollowUpOn: day(0) });
 });
+
+test("takes away a follow-up whose job was deleted in another tab", async ({ page, api }) => {
+  await api.setupAdmin();
+  const job = await api.createJob({
+    company: "Acme Robotics",
+    title: "Senior Fullstack Engineer",
+    nextFollowUpOn: day(0),
+  });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await expect(section(page, /^Hoy · 1$/)).toContainText(JOB);
+
+  await api.deleteJob(job);
+  await page.getByRole("button", { name: `Hecho: seguimiento de ${JOB}` }).click();
+
+  await expect(page.getByText("No tienes pendientes")).toBeVisible();
+  await expect(page.getByText("Algo salió mal. Intenta de nuevo.")).toHaveCount(0);
+});

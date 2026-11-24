@@ -84,3 +84,44 @@ test("never shows another user's tasks or follow-ups", async ({ page, api }) => 
   await expect(page.getByText("No tienes pendientes")).toBeVisible();
   await expect(page.getByText("Preparar la entrevista")).toHaveCount(0);
 });
+
+/** Today's calendar day in `timeZone`, `offset` days after, as YYYY-MM-DD. */
+function dayIn(timeZone: string, offset = 0): string {
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone }).format(new Date());
+  const date = new Date(`${today}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + offset);
+  return date.toISOString().slice(0, 10);
+}
+
+// Two browsers 25 hours apart are never on the same day, whatever the time of this run.
+const AHEAD = "Pacific/Kiritimati"; // UTC+14
+const BEHIND = "Pacific/Pago_Pago"; // UTC-11
+
+test.describe("in a browser far ahead (API decision 035)", () => {
+  test.use({ timezoneId: AHEAD });
+
+  test("sorts by the browser's day, not the server's", async ({ page, api }) => {
+    await api.setupAdmin();
+    await api.createTask({ title: "Preparar la entrevista técnica", dueOn: dayIn(AHEAD) });
+    await api.createTask({ title: "Mandar el CV actualizado", dueOn: dayIn(AHEAD, -1) });
+    await signIn(page, ADMIN.email, ADMIN.password);
+
+    await expect(page.getByRole("region", { name: /^Hoy · 1$/ })).toContainText("Preparar la entrevista técnica");
+    await expect(page.getByRole("region", { name: /^Atrasado · 1$/ })).toContainText("Mandar el CV actualizado");
+  });
+});
+
+test.describe("in a browser far behind (API decision 035)", () => {
+  test.use({ timezoneId: BEHIND });
+
+  test("sees the same task further ahead", async ({ page, api }) => {
+    await api.setupAdmin();
+    // Today for the browser far ahead is still to come here.
+    await api.createTask({ title: "Preparar la entrevista técnica", dueOn: dayIn(AHEAD) });
+    await signIn(page, ADMIN.email, ADMIN.password);
+
+    await expect(page.getByRole("region", { name: /^Próximos 7 días · 1$/ })).toContainText(
+      "Preparar la entrevista técnica",
+    );
+  });
+});
