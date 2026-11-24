@@ -72,7 +72,7 @@ test("sets, changes and clears the next follow-up", async ({ page, api }) => {
 
 test("shows possible duplicates after saving, and keeps the new job", async ({ page, api }) => {
   await api.setupAdmin();
-  const existing = await api.createJob({
+  await api.createJob({
     company: "Acme Robotics",
     title: "Senior Fullstack Engineer",
     url: "https://jobs.example.com/acme/1",
@@ -80,29 +80,15 @@ test("shows possible duplicates after saving, and keeps the new job", async ({ p
   });
   await signIn(page, ADMIN.email, ADMIN.password);
 
-  // Which jobs count as similar is the API's call (decision 031, still a TODO there), so this test adds the
-  // existing job to the API's real answer: it checks what the screen does with a match, not how one is found.
-  await page.route("**/api/jobs", async (route) => {
-    if (route.request().method() !== "POST") {
-      return route.fallback();
-    }
-    const response = await route.fetch();
-    const body = await response.json();
-    const job = await api.getJob(existing);
-    body.possibleDuplicates = [
-      { id: job.id, company: job.company, title: job.title, url: job.url, status: job.status },
-    ];
-    await route.fulfill({ response, json: body });
-  });
-
   await page.goto("/es/jobs/new");
-  await page.getByLabel("Empresa", { exact: true }).fill("Acme Robotics");
-  await page.getByLabel("Puesto", { exact: true }).fill("Senior Fullstack Engineer");
+  // Written differently, as on another site: the API still finds the job saved before (decision 031).
+  await page.getByLabel("Empresa", { exact: true }).fill("ACME Robotics Inc.");
+  await page.getByLabel("Puesto", { exact: true }).fill("Senior Full-Stack Engineer");
   await page.getByRole("button", { name: "Guardar vacante" }).click();
 
   const notice = page.getByRole("main").getByRole("status");
   await expect(notice).toContainText(
-    "Guardaste Acme Robotics · Senior Fullstack Engineer, pero se parece a vacantes que ya tienes",
+    "Guardaste ACME Robotics Inc. · Senior Full-Stack Engineer, pero se parece a vacantes que ya tienes",
   );
   await expect(notice.getByRole("listitem")).toHaveCount(1);
   await expect(notice.getByRole("listitem")).toContainText("Aplicada");
@@ -113,7 +99,7 @@ test("shows possible duplicates after saving, and keeps the new job", async ({ p
 
   // The new job was saved anyway: both are in the list.
   await notice.getByRole("link", { name: "Ir a vacantes" }).click();
-  await expect(page.getByRole("row", { name: /Acme Robotics/ })).toHaveCount(2);
+  await expect(page.getByRole("row", { name: /Acme Robotics/i })).toHaveCount(2);
 });
 
 test("says so when a stage change fails", async ({ page, api }) => {
