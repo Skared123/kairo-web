@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { toJobOptions } from "@/components/tasks/job-option";
+import { listJobs } from "@/lib/api/jobs";
 import { getToday } from "@/lib/api/today";
 import { requireUser } from "@/lib/auth";
 import { TodayView } from "./today-view";
@@ -19,14 +21,14 @@ export default function TodayPage() {
 async function TodayContent() {
   const t = await getTranslations("Today");
   const user = await requireUser();
-  const today = await getToday();
+  const [today, jobs] = await Promise.all([getToday(), listJobs({})]);
   return (
     <>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
         <p className="text-sm text-muted-foreground">{t("greeting", { name: user.name })}</p>
       </div>
-      <TodayView data={today} />
+      <TodayView data={today} jobs={toJobOptions(jobs)} />
     </>
   );
 }

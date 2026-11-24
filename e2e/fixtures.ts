@@ -70,6 +70,13 @@ export class Api {
     return (await res.json()).id;
   }
 
+  /** Reads one of the signed-in admin's tasks. */
+  async getTask(id: string): Promise<Record<string, unknown>> {
+    const res = await this.context.get(`/tasks/${id}`);
+    expect(res.status()).toBe(200);
+    return res.json();
+  }
+
   /** Changes one of the signed-in admin's tasks, such as `{ done: true }`. */
   async updateTask(id: string, changes: Record<string, unknown>): Promise<void> {
     expect((await this.context.patch(`/tasks/${id}`, { data: changes })).status()).toBe(200);

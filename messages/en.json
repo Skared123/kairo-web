@@ -320,5 +320,36 @@
       "description": "Add a task, or set a follow-up on one of your jobs.",
       "jobs": "Go to jobs"
     }
+  },
+  "Tasks": {
+    "fields": {
+      "title": "Task",
+      "dueOn": "Date",
+      "job": "Job",
+      "noJob": "No job",
+      "notes": "Notes"
+    },
+    "add": {
+      "placeholder": "Add a task…",
+      "submit": "Add",
+      "adding": "Adding…"
+    },
+    "markDone": "Mark as done: {title}",
+    "markOpen": "Mark as pending: {title}",
+    "edit": {
+      "button": "Edit {title}",
+      "title": "Edit task",
+      "save": "Save",
+      "saving": "Saving…"
+    },
+    "delete": {
+      "button": "Delete {title}",
+      "title": "Delete the task “{title}”?",
+      "description": "This can't be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting…"
+    },
+    "jobNotFound": "That job no longer exists. Pick another one."
   }
 }

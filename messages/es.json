@@ -320,5 +320,36 @@
       "description": "Agrega una tarea o ponle un seguimiento a una de tus vacantes.",
       "jobs": "Ir a vacantes"
     }
+  },
+  "Tasks": {
+    "fields": {
+      "title": "Tarea",
+      "dueOn": "Fecha",
+      "job": "Vacante",
+      "noJob": "Sin vacante",
+      "notes": "Notas"
+    },
+    "add": {
+      "placeholder": "Agrega una tarea…",
+      "submit": "Agregar",
+      "adding": "Agregando…"
+    },
+    "markDone": "Marcar como hecha: {title}",
+    "markOpen": "Marcar como pendiente: {title}",
+    "edit": {
+      "button": "Editar {title}",
+      "title": "Editar tarea",
+      "save": "Guardar",
+      "saving": "Guardando…"
+    },
+    "delete": {
+      "button": "Borrar {title}",
+      "title": "¿Borrar la tarea «{title}»?",
+      "description": "No se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Borrar",
+      "deleting": "Borrando…"
+    },
+    "jobNotFound": "Esa vacante ya no existe. Elige otra."
   }
 }
