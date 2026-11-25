@@ -3,8 +3,9 @@
 The web app of Kairo, a job search companion: track applications, get prepared, and act on the right opportunity in
 time. It talks to [`kairo-api`](https://github.com/Skared123/kairo-api), which holds the product docs and every rule.
 
-> **Status:** v0.3 Today. Accounts; the jobs table, capture and edit forms, the job detail with its stages, history
-> and tasks, and the criteria screen; and Today, the home page, with the tasks and follow-ups due by the browser's
+> **Status:** v0.4 Contacts. Accounts; the jobs table, capture and edit forms, the job detail with its stages,
+> history, tasks and contacts, and the criteria screen; the contacts list, forms and detail, with their jobs and
+> conversations; and Today, the home page, with the tasks and the follow-ups of jobs and contacts by the browser's
 > day. In Spanish and English. The product idea and roadmap are in `kairo-api/docs/IDEA.md`.
 
 ## Stack
@@ -85,7 +86,7 @@ After a failure, `pnpm exec playwright show-report` opens the report with a trac
 ```
 app/[locale]/
   (auth)/      first-run setup and sign-in
-  (app)/       pages that need a session: Today (the home page), jobs, criteria, password, admin/users
+  (app)/       pages that need a session: Today (the home page), jobs, contacts, criteria, password, admin/users
 components/    shared components; components/ui holds the shadcn/ui ones
 i18n/          languages, navigation helpers and message loading
 messages/      every UI string, in es.json and en.json
