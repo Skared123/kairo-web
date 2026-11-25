@@ -1,4 +1,4 @@
-import { Briefcase, CalendarCheck, KeyRound, Users } from "lucide-react";
+import { BookUser, Briefcase, CalendarCheck, KeyRound, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
@@ -46,6 +46,12 @@ async function SignedInAs() {
         <Link href="/jobs">
           <Briefcase aria-hidden />
           {t("jobs")}
+        </Link>
+      </Button>
+      <Button asChild variant="ghost" size="sm">
+        <Link href="/contacts">
+          <BookUser aria-hidden />
+          {t("contacts")}
         </Link>
       </Button>
       {/* Only a shortcut: /admin/users checks the role, and so does the API. */}

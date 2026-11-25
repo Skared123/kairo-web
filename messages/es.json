@@ -8,7 +8,8 @@
     "password": "Contraseña",
     "admin": "Administración",
     "jobs": "Vacantes",
-    "today": "Hoy"
+    "today": "Hoy",
+    "contacts": "Contactos"
   },
   "Preferences": {
     "darkTheme": "Tema oscuro",
@@ -155,6 +156,65 @@
     "accepted": "Aceptada",
     "rejected": "Rechazada",
     "discarded": "Descartada"
+  },
+  "Contacts": {
+    "title": "Contactos",
+    "description": "Las personas con las que hablas en tu búsqueda.",
+    "new": "Nuevo contacto",
+    "search": {
+      "label": "Buscar por nombre o empresa",
+      "submit": "Buscar"
+    },
+    "columns": {
+      "name": "Nombre",
+      "company": "Empresa",
+      "kind": "Tipo",
+      "lastInteraction": "Última conversación",
+      "followUp": "Seguimiento"
+    },
+    "empty": {
+      "none": "Aún no tienes contactos.",
+      "filtered": "No hay contactos que coincidan."
+    }
+  },
+  "ContactForm": {
+    "newTitle": "Nuevo contacto",
+    "editTitle": "Editar contacto",
+    "create": "Guardar contacto",
+    "save": "Guardar cambios",
+    "saving": "Guardando…",
+    "none": "—",
+    "notFound": "Ese contacto ya no existe.",
+    "sections": {
+      "person": "La persona",
+      "reach": "Cómo contactarle",
+      "followUp": "Próximo seguimiento"
+    },
+    "fields": {
+      "name": "Nombre",
+      "company": "Empresa",
+      "role": "Puesto",
+      "kind": "Tipo",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "linkedinUrl": "Perfil de LinkedIn",
+      "notes": "Notas",
+      "nextFollowUpOn": "Fecha",
+      "nextFollowUpNote": "Qué escribirle"
+    },
+    "placeholders": {
+      "role": "Ej. Talent Partner",
+      "notes": "Cómo se conocieron, qué le interesa…",
+      "nextFollowUpNote": "Ej. mandarle el portafolio"
+    }
+  },
+  "ContactKind": {
+    "recruiter": "Reclutador(a)",
+    "hiring_manager": "Responsable de contratación",
+    "interviewer": "Entrevistador(a)",
+    "referral": "Me refiere",
+    "employee": "Trabaja ahí",
+    "other": "Otro"
   },
   "Jobs": {
     "title": "Vacantes",

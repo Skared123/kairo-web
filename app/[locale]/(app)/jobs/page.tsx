@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { CriteriaBadges } from "@/components/criteria-badges";
 import { JobStatusBadge } from "@/components/job-status-badge";
+import { SearchBox } from "@/components/search-box";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Link } from "@/i18n/navigation";
@@ -11,7 +12,6 @@ import { JOB_STATUSES, type JobSort, type JobStatus } from "@/lib/api/types";
 import { requireUser } from "@/lib/auth";
 import { formatDay } from "@/lib/format-day";
 import { cn } from "@/lib/utils";
-import { SearchBox } from "./search-box";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
@@ -69,7 +69,7 @@ async function JobsView({ searchParams }: { searchParams: SearchParams }) {
     <div className="flex flex-col gap-4">
       <StageTabs filters={filters} />
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <SearchBox filters={filters} />
+        <SearchBox pathname="/jobs" query={filters} label={t("search.label")} submitLabel={t("search.submit")} />
         <SortLinks filters={filters} />
       </div>
       {jobs.length === 0 ? (

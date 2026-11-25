@@ -276,6 +276,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/contacts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ContactsController_list"];
+        put?: never;
+        post: operations["ContactsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contacts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ContactsController_findOne"];
+        put?: never;
+        post?: never;
+        delete: operations["ContactsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["ContactsController_update"];
+        trace?: never;
+    };
+    "/contacts/{id}/jobs/{jobId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["ContactsController_link"];
+        post?: never;
+        delete: operations["ContactsController_unlink"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contacts/{contactId}/interactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ContactInteractionsController_list"];
+        put?: never;
+        post: operations["ContactInteractionsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contacts/{contactId}/interactions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["ContactInteractionsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["ContactInteractionsController_update"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1535,8 +1615,520 @@ export interface operations {
                             on: string;
                             note: string | null;
                         }[];
+                        contactFollowUps: {
+                            contact: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                company: string | null;
+                            };
+                            /** Format: date */
+                            on: string;
+                            note: string | null;
+                        }[];
                     };
                 };
+            };
+        };
+    };
+    ContactsController_list: {
+        parameters: {
+            query?: {
+                q?: string;
+                jobId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        company: string | null;
+                        role: string | null;
+                        /** @enum {string|null} */
+                        kind: "recruiter" | "hiring_manager" | "interviewer" | "referral" | "employee" | "other" | null;
+                        email: string | null;
+                        phone: string | null;
+                        linkedinUrl: string | null;
+                        notes: string | null;
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        /** Format: date */
+                        lastInteractionOn: string | null;
+                        jobs: {
+                            /** Format: uuid */
+                            id: string;
+                            company: string;
+                            title: string;
+                            /** @enum {string} */
+                            status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        }[];
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    }[];
+                };
+            };
+        };
+    };
+    ContactsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    company?: string | null;
+                    role?: string | null;
+                    /** @enum {string|null} */
+                    kind?: "recruiter" | "hiring_manager" | "interviewer" | "referral" | "employee" | "other" | null;
+                    /** Format: email */
+                    email?: string | null;
+                    phone?: string | null;
+                    /** Format: uri */
+                    linkedinUrl?: string | null;
+                    notes?: string | null;
+                    /** Format: date */
+                    nextFollowUpOn?: string | null;
+                    nextFollowUpNote?: string | null;
+                    jobIds?: string[];
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        company: string | null;
+                        role: string | null;
+                        /** @enum {string|null} */
+                        kind: "recruiter" | "hiring_manager" | "interviewer" | "referral" | "employee" | "other" | null;
+                        email: string | null;
+                        phone: string | null;
+                        linkedinUrl: string | null;
+                        notes: string | null;
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        /** Format: date */
+                        lastInteractionOn: string | null;
+                        jobs: {
+                            /** Format: uuid */
+                            id: string;
+                            company: string;
+                            title: string;
+                            /** @enum {string} */
+                            status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        }[];
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+            /** @description Invalid fields, or a job that is not one of the user's (job_not_found) */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        company: string | null;
+                        role: string | null;
+                        /** @enum {string|null} */
+                        kind: "recruiter" | "hiring_manager" | "interviewer" | "referral" | "employee" | "other" | null;
+                        email: string | null;
+                        phone: string | null;
+                        linkedinUrl: string | null;
+                        notes: string | null;
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        /** Format: date */
+                        lastInteractionOn: string | null;
+                        jobs: {
+                            /** Format: uuid */
+                            id: string;
+                            company: string;
+                            title: string;
+                            /** @enum {string} */
+                            status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        }[];
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+            /** @description Contact not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Contact not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    company?: string | null;
+                    role?: string | null;
+                    /** @enum {string|null} */
+                    kind?: "recruiter" | "hiring_manager" | "interviewer" | "referral" | "employee" | "other" | null;
+                    /** Format: email */
+                    email?: string | null;
+                    phone?: string | null;
+                    /** Format: uri */
+                    linkedinUrl?: string | null;
+                    notes?: string | null;
+                    /** Format: date */
+                    nextFollowUpOn?: string | null;
+                    nextFollowUpNote?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        company: string | null;
+                        role: string | null;
+                        /** @enum {string|null} */
+                        kind: "recruiter" | "hiring_manager" | "interviewer" | "referral" | "employee" | "other" | null;
+                        email: string | null;
+                        phone: string | null;
+                        linkedinUrl: string | null;
+                        notes: string | null;
+                        /** Format: date */
+                        nextFollowUpOn: string | null;
+                        nextFollowUpNote: string | null;
+                        /** Format: date */
+                        lastInteractionOn: string | null;
+                        jobs: {
+                            /** Format: uuid */
+                            id: string;
+                            company: string;
+                            title: string;
+                            /** @enum {string} */
+                            status: "to_review" | "to_apply" | "applied" | "interviewing" | "offer" | "accepted" | "rejected" | "discarded";
+                        }[];
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+            /** @description Contact not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactsController_link: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                jobId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Contact or job not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactsController_unlink: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                jobId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Contact or job not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactInteractionsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contactId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        /** Format: date */
+                        occurredOn: string;
+                        /** @enum {string} */
+                        channel: "email" | "linkedin" | "call" | "meeting" | "other";
+                        note: string | null;
+                        /** Format: date-time */
+                        createdAt: string;
+                    }[];
+                };
+            };
+            /** @description Contact not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactInteractionsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contactId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: date */
+                    occurredOn: string;
+                    /** @enum {string} */
+                    channel: "email" | "linkedin" | "call" | "meeting" | "other";
+                    note?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        /** Format: date */
+                        occurredOn: string;
+                        /** @enum {string} */
+                        channel: "email" | "linkedin" | "call" | "meeting" | "other";
+                        note: string | null;
+                        /** Format: date-time */
+                        createdAt: string;
+                    };
+                };
+            };
+            /** @description Contact not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactInteractionsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contactId: string;
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Contact or interaction not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContactInteractionsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contactId: string;
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: date */
+                    occurredOn?: string;
+                    /** @enum {string} */
+                    channel?: "email" | "linkedin" | "call" | "meeting" | "other";
+                    note?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        /** Format: date */
+                        occurredOn: string;
+                        /** @enum {string} */
+                        channel: "email" | "linkedin" | "call" | "meeting" | "other";
+                        note: string | null;
+                        /** Format: date-time */
+                        createdAt: string;
+                    };
+                };
+            };
+            /** @description Contact or interaction not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

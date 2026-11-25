@@ -32,3 +32,17 @@ export type Task = paths["/tasks"]["get"]["responses"][200]["content"]["applicat
 /** Everything Today shows, as `GET /today` returns it: not filtered by day (API decision 035). */
 export type Today = paths["/today"]["get"]["responses"][200]["content"]["application/json"];
 export type FollowUp = Today["followUps"][number];
+
+/** A contact as the API returns it, with its jobs and the day of its latest conversation (API decisions 036 to 038). */
+export type Contact = paths["/contacts"]["get"]["responses"][200]["content"]["application/json"][number];
+export type ContactKind = NonNullable<Contact["kind"]>;
+
+/** How a contact relates to the search, in the order the form lists them. */
+export const CONTACT_KINDS = [
+  "recruiter",
+  "hiring_manager",
+  "interviewer",
+  "referral",
+  "employee",
+  "other",
+] as const satisfies readonly ContactKind[];

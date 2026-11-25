@@ -8,7 +8,8 @@
     "password": "Password",
     "admin": "Admin",
     "jobs": "Jobs",
-    "today": "Today"
+    "today": "Today",
+    "contacts": "Contacts"
   },
   "Preferences": {
     "darkTheme": "Dark theme",
@@ -155,6 +156,65 @@
     "accepted": "Accepted",
     "rejected": "Rejected",
     "discarded": "Discarded"
+  },
+  "Contacts": {
+    "title": "Contacts",
+    "description": "The people you talk to during your search.",
+    "new": "New contact",
+    "search": {
+      "label": "Search by name or company",
+      "submit": "Search"
+    },
+    "columns": {
+      "name": "Name",
+      "company": "Company",
+      "kind": "Kind",
+      "lastInteraction": "Last conversation",
+      "followUp": "Follow-up"
+    },
+    "empty": {
+      "none": "No contacts yet.",
+      "filtered": "No contacts match."
+    }
+  },
+  "ContactForm": {
+    "newTitle": "New contact",
+    "editTitle": "Edit contact",
+    "create": "Save contact",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "none": "—",
+    "notFound": "That contact no longer exists.",
+    "sections": {
+      "person": "The person",
+      "reach": "How to reach them",
+      "followUp": "Next follow-up"
+    },
+    "fields": {
+      "name": "Name",
+      "company": "Company",
+      "role": "Role",
+      "kind": "Kind",
+      "email": "Email",
+      "phone": "Phone",
+      "linkedinUrl": "LinkedIn profile",
+      "notes": "Notes",
+      "nextFollowUpOn": "Date",
+      "nextFollowUpNote": "What to write about"
+    },
+    "placeholders": {
+      "role": "E.g. Talent Partner",
+      "notes": "How you met, what they care about…",
+      "nextFollowUpNote": "E.g. send the portfolio"
+    }
+  },
+  "ContactKind": {
+    "recruiter": "Recruiter",
+    "hiring_manager": "Hiring manager",
+    "interviewer": "Interviewer",
+    "referral": "Refers me",
+    "employee": "Works there",
+    "other": "Other"
   },
   "Jobs": {
     "title": "Jobs",

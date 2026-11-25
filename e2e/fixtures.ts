@@ -95,6 +95,25 @@ export class Api {
     expect((await this.context.delete(`/tasks/${id}`)).status()).toBe(204);
   }
 
+  /** Creates a contact for the signed-in admin and returns its id. */
+  async createContact(fields: Record<string, unknown>): Promise<string> {
+    const res = await this.context.post("/contacts", { data: fields });
+    expect(res.status()).toBe(201);
+    return (await res.json()).id;
+  }
+
+  /** Reads one of the signed-in admin's contacts. */
+  async getContact(id: string): Promise<Record<string, unknown>> {
+    const res = await this.context.get(`/contacts/${id}`);
+    expect(res.status()).toBe(200);
+    return res.json();
+  }
+
+  /** Logs a conversation with one of the signed-in admin's contacts. */
+  async logInteraction(contactId: string, fields: Record<string, unknown>): Promise<void> {
+    expect((await this.context.post(`/contacts/${contactId}/interactions`, { data: fields })).status()).toBe(201);
+  }
+
   /** Saves the signed-in admin's criteria. */
   async saveCriteria(criteria: Record<string, unknown>): Promise<void> {
     expect((await this.context.put("/criteria", { data: criteria })).status()).toBe(200);
