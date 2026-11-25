@@ -43,7 +43,10 @@ export function addDays(day: string, days: number): string {
  * Within a section, items go by day; on the same day, jobs' follow-ups, then contacts', then tasks; otherwise in the
  * API's order.
  */
-export function groupToday({ tasks, followUps, contactFollowUps }: Today, today: string): TodaySections {
+export function groupToday(
+  { tasks, followUps, contactFollowUps }: Pick<Today, "tasks" | "followUps" | "contactFollowUps">,
+  today: string,
+): TodaySections {
   const lastUpcoming = addDays(today, UPCOMING_DAYS);
   const sections: TodaySections = { overdue: [], today: [], upcoming: [], later: [], noDate: [], doneToday: [] };
 

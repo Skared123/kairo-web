@@ -9,7 +9,8 @@
     "admin": "Administración",
     "jobs": "Vacantes",
     "today": "Hoy",
-    "contacts": "Contactos"
+    "contacts": "Contactos",
+    "learning": "Aprendizaje"
   },
   "Preferences": {
     "darkTheme": "Tema oscuro",
@@ -276,6 +277,80 @@
     "call": "Llamada",
     "meeting": "Reunión",
     "other": "Otro"
+  },
+  "Learning": {
+    "title": "Aprendizaje",
+    "description": "Lo que estudias o construyes, y las habilidades que entrena.",
+    "new": "Nuevo recurso",
+    "all": "Todos",
+    "skillFilter": {
+      "label": "Habilidad",
+      "all": "Todas las habilidades"
+    },
+    "columns": {
+      "item": "Recurso",
+      "skills": "Habilidades",
+      "status": "Estado"
+    },
+    "open": "Abrir {title}",
+    "empty": {
+      "none": "Aún no tienes recursos de aprendizaje.",
+      "filtered": "No hay recursos que coincidan."
+    }
+  },
+  "LearningForm": {
+    "newTitle": "Nuevo recurso",
+    "editTitle": "Editar recurso",
+    "create": "Guardar recurso",
+    "save": "Guardar cambios",
+    "saving": "Guardando…",
+    "none": "—",
+    "notFound": "Ese recurso ya no existe.",
+    "sections": {
+      "item": "El recurso",
+      "skills": "Habilidades",
+      "progress": "Avance"
+    },
+    "fields": {
+      "title": "Título",
+      "kind": "Tipo",
+      "url": "Enlace",
+      "skills": "Habilidades que entrena",
+      "status": "Estado",
+      "notes": "Notas"
+    },
+    "placeholders": {
+      "title": "Ej. NestJS Fundamentals",
+      "notes": "En qué te quedaste, qué sigue…"
+    },
+    "skills": {
+      "placeholder": "Escribe una habilidad y presiona Enter",
+      "hint": "Elige una de tus habilidades o escribe una nueva.",
+      "chosen": "Habilidades elegidas",
+      "remove": "Quitar {name}"
+    },
+    "delete": {
+      "button": "Borrar",
+      "title": "¿Borrar «{title}»?",
+      "description": "Se borrará el recurso. Tus habilidades se quedan. No se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Borrar",
+      "deleting": "Borrando…"
+    }
+  },
+  "LearningKind": {
+    "course": "Curso",
+    "video": "Video",
+    "article": "Artículo",
+    "book": "Libro",
+    "project": "Proyecto",
+    "other": "Otro"
+  },
+  "LearningStatus": {
+    "in_progress": "En curso",
+    "to_start": "Por empezar",
+    "done": "Terminado",
+    "dropped": "Abandonado"
   },
   "Jobs": {
     "title": "Vacantes",

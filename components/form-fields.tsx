@@ -36,14 +36,14 @@ export function TextareaField<T extends FieldValues>({
 // Radix Select items cannot have an empty value, so "no choice" travels as this placeholder and becomes "".
 const NONE = "__none__";
 
-/** A labelled select wired to React Hook Form, with a "none" option that clears it. */
+/** A labelled select wired to React Hook Form; with `noneLabel`, a "none" option that clears it. */
 export function SelectField<T extends FieldValues>({
   control,
   name,
   label,
   options,
   noneLabel,
-}: BaseProps<T> & { options: readonly { value: string; label: string }[]; noneLabel: string }) {
+}: BaseProps<T> & { options: readonly { value: string; label: string }[]; noneLabel?: string }) {
   const id = useId();
   return (
     <Controller
@@ -57,7 +57,7 @@ export function SelectField<T extends FieldValues>({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={NONE}>{noneLabel}</SelectItem>
+              {noneLabel && <SelectItem value={NONE}>{noneLabel}</SelectItem>}
               {options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}

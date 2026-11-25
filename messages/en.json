@@ -9,7 +9,8 @@
     "admin": "Admin",
     "jobs": "Jobs",
     "today": "Today",
-    "contacts": "Contacts"
+    "contacts": "Contacts",
+    "learning": "Learning"
   },
   "Preferences": {
     "darkTheme": "Dark theme",
@@ -276,6 +277,80 @@
     "call": "Call",
     "meeting": "Meeting",
     "other": "Other"
+  },
+  "Learning": {
+    "title": "Learning",
+    "description": "What you study or build, and the skills it trains.",
+    "new": "New item",
+    "all": "All",
+    "skillFilter": {
+      "label": "Skill",
+      "all": "All skills"
+    },
+    "columns": {
+      "item": "Item",
+      "skills": "Skills",
+      "status": "Status"
+    },
+    "open": "Open {title}",
+    "empty": {
+      "none": "No learning items yet.",
+      "filtered": "No items match."
+    }
+  },
+  "LearningForm": {
+    "newTitle": "New item",
+    "editTitle": "Edit item",
+    "create": "Save item",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "none": "—",
+    "notFound": "That item no longer exists.",
+    "sections": {
+      "item": "The item",
+      "skills": "Skills",
+      "progress": "Progress"
+    },
+    "fields": {
+      "title": "Title",
+      "kind": "Kind",
+      "url": "Link",
+      "skills": "Skills it trains",
+      "status": "Status",
+      "notes": "Notes"
+    },
+    "placeholders": {
+      "title": "E.g. NestJS Fundamentals",
+      "notes": "Where you left off, what's next…"
+    },
+    "skills": {
+      "placeholder": "Type a skill and press Enter",
+      "hint": "Pick one of your skills or type a new one.",
+      "chosen": "Chosen skills",
+      "remove": "Remove {name}"
+    },
+    "delete": {
+      "button": "Delete",
+      "title": "Delete “{title}”?",
+      "description": "The item will be deleted. Your skills stay. This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting…"
+    }
+  },
+  "LearningKind": {
+    "course": "Course",
+    "video": "Video",
+    "article": "Article",
+    "book": "Book",
+    "project": "Project",
+    "other": "Other"
+  },
+  "LearningStatus": {
+    "in_progress": "In progress",
+    "to_start": "To start",
+    "done": "Done",
+    "dropped": "Dropped"
   },
   "Jobs": {
     "title": "Jobs",

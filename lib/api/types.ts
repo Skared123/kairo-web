@@ -60,3 +60,30 @@ export const INTERACTION_CHANNELS = [
   "meeting",
   "other",
 ] as const satisfies readonly InteractionChannel[];
+
+/** A learning item as the API returns it, with its skills (API decisions 040 to 042). */
+export type LearningItem = paths["/learning"]["get"]["responses"][200]["content"]["application/json"][number];
+export type LearningKind = LearningItem["kind"];
+export type LearningStatus = LearningItem["status"];
+
+/** In the order the form and the tabs list them. */
+export const LEARNING_KINDS = [
+  "course",
+  "video",
+  "article",
+  "book",
+  "project",
+  "other",
+] as const satisfies readonly LearningKind[];
+export const LEARNING_STATUSES = [
+  "in_progress",
+  "to_start",
+  "done",
+  "dropped",
+] as const satisfies readonly LearningStatus[];
+
+/** One of the user's skills, with how many items train it (API decision 040). */
+export type Skill = paths["/skills"]["get"]["responses"][200]["content"]["application/json"][number];
+
+/** The study item Today shows, or null (API decision 042). */
+export type Focus = Today["focus"];

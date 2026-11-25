@@ -356,6 +356,70 @@ export interface paths {
         patch: operations["ContactInteractionsController_update"];
         trace?: never;
     };
+    "/learning": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["LearningController_list"];
+        put?: never;
+        post: operations["LearningController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["LearningController_findOne"];
+        put?: never;
+        post?: never;
+        delete: operations["LearningController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["LearningController_update"];
+        trace?: never;
+    };
+    "/skills": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SkillsController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/skills/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["SkillsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["SkillsController_rename"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1626,6 +1690,21 @@ export interface operations {
                             on: string;
                             note: string | null;
                         }[];
+                        focus: {
+                            /** Format: uuid */
+                            id: string;
+                            title: string;
+                            /** @enum {string} */
+                            kind: "video" | "course" | "article" | "book" | "project" | "other";
+                            url: string | null;
+                            /** @enum {string} */
+                            status: "to_start" | "in_progress" | "done" | "dropped";
+                            skills: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                            }[];
+                        } | null;
                     };
                 };
             };
@@ -2125,6 +2204,343 @@ export interface operations {
             };
             /** @description Contact or interaction not found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LearningController_list: {
+        parameters: {
+            query?: {
+                status?: "to_start" | "in_progress" | "done" | "dropped";
+                skillId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        title: string;
+                        /** @enum {string} */
+                        kind: "video" | "course" | "article" | "book" | "project" | "other";
+                        url: string | null;
+                        /** @enum {string} */
+                        status: "to_start" | "in_progress" | "done" | "dropped";
+                        /** Format: date-time */
+                        finishedAt: string | null;
+                        isFocus: boolean;
+                        notes: string | null;
+                        skills: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                        }[];
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    }[];
+                };
+            };
+        };
+    };
+    LearningController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    title: string;
+                    /** @enum {string} */
+                    kind: "video" | "course" | "article" | "book" | "project" | "other";
+                    /** Format: uri */
+                    url?: string | null;
+                    notes?: string | null;
+                    skills?: string[];
+                    /** @enum {string} */
+                    status?: "to_start" | "in_progress" | "done" | "dropped";
+                    isFocus?: boolean;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        title: string;
+                        /** @enum {string} */
+                        kind: "video" | "course" | "article" | "book" | "project" | "other";
+                        url: string | null;
+                        /** @enum {string} */
+                        status: "to_start" | "in_progress" | "done" | "dropped";
+                        /** Format: date-time */
+                        finishedAt: string | null;
+                        isFocus: boolean;
+                        notes: string | null;
+                        skills: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                        }[];
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+        };
+    };
+    LearningController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        title: string;
+                        /** @enum {string} */
+                        kind: "video" | "course" | "article" | "book" | "project" | "other";
+                        url: string | null;
+                        /** @enum {string} */
+                        status: "to_start" | "in_progress" | "done" | "dropped";
+                        /** Format: date-time */
+                        finishedAt: string | null;
+                        isFocus: boolean;
+                        notes: string | null;
+                        skills: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                        }[];
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+            /** @description Learning item not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LearningController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Learning item not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LearningController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    title?: string;
+                    /** @enum {string} */
+                    kind?: "video" | "course" | "article" | "book" | "project" | "other";
+                    /** Format: uri */
+                    url?: string | null;
+                    notes?: string | null;
+                    skills?: string[];
+                    /** @enum {string} */
+                    status?: "to_start" | "in_progress" | "done" | "dropped";
+                    isFocus?: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        title: string;
+                        /** @enum {string} */
+                        kind: "video" | "course" | "article" | "book" | "project" | "other";
+                        url: string | null;
+                        /** @enum {string} */
+                        status: "to_start" | "in_progress" | "done" | "dropped";
+                        /** Format: date-time */
+                        finishedAt: string | null;
+                        isFocus: boolean;
+                        notes: string | null;
+                        skills: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                        }[];
+                        /** Format: date-time */
+                        createdAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                    };
+                };
+            };
+            /** @description Learning item not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    SkillsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        itemCount: number;
+                    }[];
+                };
+            };
+        };
+    };
+    SkillsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Skill not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    SkillsController_rename: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        itemCount: number;
+                    };
+                };
+            };
+            /** @description Skill not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Another of the user's skills has that name (skill_exists) */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };

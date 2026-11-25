@@ -119,6 +119,27 @@ export class Api {
     expect((await this.context.post(`/contacts/${contactId}/interactions`, { data: fields })).status()).toBe(201);
   }
 
+  /** Creates a learning item for the signed-in admin and returns its id. */
+  async createLearningItem(fields: Record<string, unknown>): Promise<string> {
+    const res = await this.context.post("/learning", { data: { kind: "course", ...fields } });
+    expect(res.status()).toBe(201);
+    return (await res.json()).id;
+  }
+
+  /** Reads one of the signed-in admin's learning items. */
+  async getLearningItem(id: string): Promise<Record<string, unknown>> {
+    const res = await this.context.get(`/learning/${id}`);
+    expect(res.status()).toBe(200);
+    return res.json();
+  }
+
+  /** The signed-in admin's skills, with their item counts. */
+  async listSkills(): Promise<{ id: string; name: string; itemCount: number }[]> {
+    const res = await this.context.get("/skills");
+    expect(res.status()).toBe(200);
+    return res.json();
+  }
+
   /** Saves the signed-in admin's criteria. */
   async saveCriteria(criteria: Record<string, unknown>): Promise<void> {
     expect((await this.context.put("/criteria", { data: criteria })).status()).toBe(200);
