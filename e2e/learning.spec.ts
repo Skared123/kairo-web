@@ -198,3 +198,92 @@ test("never shows or opens another user's learning items", async ({ page, api })
   await expect(page.getByText("404")).toBeVisible();
   await expect(page.getByLabel("Título", { exact: true })).toHaveCount(0);
 });
+
+test("changes an item's status from the list", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createLearningItem({ title: "NestJS Fundamentals", status: "in_progress", isFocus: true });
+  await api.createLearningItem({ title: "Effective TypeScript", kind: "book" });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto("/es/learning");
+
+  await page.getByLabel("Estado de NestJS Fundamentals").click();
+  await page.getByRole("option", { name: "Terminado" }).click();
+
+  // Done: it sorts last, and a finished item has no star.
+  const rows = page.getByRole("main").getByRole("row");
+  await expect(rows.nth(2)).toContainText("NestJS Fundamentals");
+  await expect(page.getByRole("button", { name: "Foco: NestJS Fundamentals" })).toHaveCount(0);
+  expect(await api.getLearningItem(id)).toMatchObject({
+    status: "done",
+    isFocus: false,
+    finishedAt: expect.any(String),
+  });
+});
+
+test("moves the focus with the star, one item at a time", async ({ page, api }) => {
+  await api.setupAdmin();
+  const nest = await api.createLearningItem({ title: "NestJS Fundamentals", status: "in_progress" });
+  const book = await api.createLearningItem({ title: "Effective TypeScript", kind: "book" });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto("/es/learning");
+
+  const nestStar = page.getByRole("button", { name: "Foco: NestJS Fundamentals" });
+  const bookStar = page.getByRole("button", { name: "Foco: Effective TypeScript" });
+  await expect(nestStar).toHaveAttribute("aria-pressed", "false");
+
+  await nestStar.click();
+  await expect(nestStar).toHaveAttribute("aria-pressed", "true");
+  // The star shows at once and is disabled until its save and refresh are done.
+  await expect(nestStar).toBeEnabled();
+
+  // Marking another moves it, and the focus sorts first.
+  await bookStar.click();
+  await expect(bookStar).toHaveAttribute("aria-pressed", "true");
+  await expect(nestStar).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("main").getByRole("row").nth(1)).toContainText("Effective TypeScript");
+  expect(await api.getLearningItem(book)).toMatchObject({ isFocus: true });
+  expect(await api.getLearningItem(nest)).toMatchObject({ isFocus: false });
+
+  await bookStar.click();
+  await expect(bookStar).toHaveAttribute("aria-pressed", "false");
+  await expect.poll(async () => (await api.getLearningItem(book)).isFocus).toBe(false);
+});
+
+test("renames and deletes skills, and leads to their items", async ({ page, api }) => {
+  await api.setupAdmin();
+  const item = await api.createLearningItem({ title: "NestJS Fundamentals", skills: ["NestJS", "typescript"] });
+  await api.createLearningItem({ title: "Effective TypeScript", kind: "book", skills: ["TypeScript"] });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto("/es/learning");
+  await page.getByRole("link", { name: "Habilidades" }).click();
+
+  const main = page.getByRole("main");
+  await expect(main.getByRole("heading", { name: "Habilidades", level: 1 })).toBeVisible();
+  await expect(main.getByRole("row", { name: /typescript/ })).toContainText("2 recursos");
+  await expect(main.getByRole("row", { name: /NestJS/ })).toContainText("1 recurso");
+
+  // A name it already has is refused.
+  await main.getByRole("button", { name: "Renombrar NestJS" }).click();
+  const dialog = page.getByRole("dialog", { name: "Renombrar habilidad" });
+  await dialog.getByLabel("Nombre", { exact: true }).fill("TYPESCRIPT");
+  await dialog.getByRole("button", { name: "Guardar" }).click();
+  await expect(dialog.getByText("Ya tienes una habilidad con ese nombre.")).toBeVisible();
+  await dialog.getByLabel("Nombre", { exact: true }).fill("NestJS 11");
+  await dialog.getByRole("button", { name: "Guardar" }).click();
+  await expect(dialog).toBeHidden();
+  await expect(main.getByRole("row", { name: /NestJS 11/ })).toBeVisible();
+  expect((await api.getLearningItem(item)).skills).toMatchObject([{ name: "NestJS 11" }, { name: "typescript" }]);
+
+  // Deleting says how many items keep going without it.
+  await main.getByRole("button", { name: "Borrar NestJS 11" }).click();
+  const confirm = page.getByRole("alertdialog");
+  await expect(confirm).toContainText("1 recurso la usa; se queda, sin ella.");
+  await confirm.getByRole("button", { name: "Borrar" }).click();
+  await expect(main.getByRole("row", { name: /NestJS 11/ })).toHaveCount(0);
+  expect((await api.getLearningItem(item)).skills).toMatchObject([{ name: "typescript" }]);
+
+  // A skill's count leads to its items.
+  await main.getByRole("link", { name: "2 recursos" }).click();
+  await expect(page).toHaveURL(/\/es\/learning\?skillId=/);
+  await expect(page.getByRole("main").getByRole("row")).toHaveCount(3);
+});

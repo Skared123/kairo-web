@@ -296,6 +296,13 @@
     "empty": {
       "none": "Aún no tienes recursos de aprendizaje.",
       "filtered": "No hay recursos que coincidan."
+    },
+    "skillsLink": "Habilidades",
+    "statusOf": "Estado de {title}",
+    "focus": {
+      "toggle": "Foco: {title}",
+      "is": "Es tu foco: sale en Hoy",
+      "make": "Hacerlo tu foco"
     }
   },
   "LearningForm": {
@@ -351,6 +358,34 @@
     "to_start": "Por empezar",
     "done": "Terminado",
     "dropped": "Abandonado"
+  },
+  "Skills": {
+    "back": "Aprendizaje",
+    "title": "Habilidades",
+    "description": "Las habilidades que entrenas. Se crean al guardar un recurso.",
+    "empty": "Aún no tienes habilidades. Agrégalas a tus recursos de aprendizaje.",
+    "columns": {
+      "name": "Habilidad",
+      "items": "Recursos",
+      "actions": "Acciones"
+    },
+    "items": "{count, plural, =0 {Ningún recurso} one {# recurso} other {# recursos}}",
+    "rename": {
+      "button": "Renombrar {name}",
+      "title": "Renombrar habilidad",
+      "label": "Nombre",
+      "save": "Guardar",
+      "saving": "Guardando…",
+      "exists": "Ya tienes una habilidad con ese nombre."
+    },
+    "delete": {
+      "button": "Borrar {name}",
+      "title": "¿Borrar «{name}»?",
+      "description": "{count, plural, =0 {Ningún recurso la usa.} one {# recurso la usa; se queda, sin ella.} other {# recursos la usan; se quedan, sin ella.}} No se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Borrar",
+      "deleting": "Borrando…"
+    }
   },
   "Jobs": {
     "title": "Vacantes",

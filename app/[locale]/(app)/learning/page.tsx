@@ -1,6 +1,8 @@
-import { ExternalLink, Plus } from "lucide-react";
+import { ExternalLink, Plus, Tags } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { FocusStar } from "@/components/learning/focus-star";
+import { ItemStatusSelect } from "@/components/learning/item-status-select";
 import { SkillFilter } from "@/components/learning/skill-filter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,12 +25,20 @@ export default async function LearningPage({ searchParams }: { searchParams: Sea
           <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
           <p className="text-sm text-muted-foreground">{t("description")}</p>
         </div>
-        <Button asChild>
-          <Link href="/learning/new">
-            <Plus aria-hidden />
-            {t("new")}
-          </Link>
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild variant="outline">
+            <Link href="/skills">
+              <Tags aria-hidden />
+              {t("skillsLink")}
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link href="/learning/new">
+              <Plus aria-hidden />
+              {t("new")}
+            </Link>
+          </Button>
+        </div>
       </div>
       {/* The filters come from the URL and the items from the session: both are request-time data. */}
       <Suspense fallback={null}>
@@ -50,10 +60,9 @@ function toFilters(params: Awaited<SearchParams>): LearningFilters {
 
 async function LearningView({ searchParams }: { searchParams: SearchParams }) {
   await requireUser();
-  const [t, kinds, statuses, skills, params] = await Promise.all([
+  const [t, kinds, skills, params] = await Promise.all([
     getTranslations("Learning"),
     getTranslations("LearningKind"),
-    getTranslations("LearningStatus"),
     listSkills(),
     searchParams,
   ]);
@@ -84,23 +93,33 @@ async function LearningView({ searchParams }: { searchParams: SearchParams }) {
             {items.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <div className="flex items-center gap-1.5">
-                    <Link href={`/learning/${item.id}/edit`} className="font-medium hover:underline">
-                      {item.title}
-                    </Link>
-                    {item.url && (
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={t("open", { title: item.title })}
-                        className="text-muted-foreground hover:text-foreground"
-                      >
-                        <ExternalLink className="size-3.5" aria-hidden />
-                      </a>
+                  <div className="flex items-start gap-2">
+                    {/* A finished item cannot be the focus (API decision 042); the space keeps titles aligned. */}
+                    {item.status === "done" || item.status === "dropped" ? (
+                      <span className="size-7 shrink-0" />
+                    ) : (
+                      <FocusStar item={item} />
                     )}
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-1.5">
+                        <Link href={`/learning/${item.id}/edit`} className="font-medium hover:underline">
+                          {item.title}
+                        </Link>
+                        {item.url && (
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={t("open", { title: item.title })}
+                            className="text-muted-foreground hover:text-foreground"
+                          >
+                            <ExternalLink className="size-3.5" aria-hidden />
+                          </a>
+                        )}
+                      </div>
+                      <span className="text-xs text-muted-foreground">{kinds(item.kind)}</span>
+                    </div>
                   </div>
-                  <span className="text-xs text-muted-foreground">{kinds(item.kind)}</span>
                 </TableCell>
                 <TableCell>
                   {item.skills.length > 0 ? (
@@ -116,9 +135,7 @@ async function LearningView({ searchParams }: { searchParams: SearchParams }) {
                   )}
                 </TableCell>
                 <TableCell>
-                  <Badge variant={item.status === "in_progress" ? "default" : "secondary"}>
-                    {statuses(item.status)}
-                  </Badge>
+                  <ItemStatusSelect item={item} />
                 </TableCell>
               </TableRow>
             ))}
