@@ -2,7 +2,7 @@
 
 import { ChevronRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useId, useSyncExternalStore, type ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { FollowUpLine } from "@/components/follow-ups/follow-up-line";
 import type { JobOption } from "@/components/tasks/job-option";
 import { QuickAddTask } from "@/components/tasks/quick-add-task";
@@ -11,9 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import type { Task, Today } from "@/lib/api/types";
 import { cn } from "@/lib/utils";
-import { groupToday, localDay, type TodayItem } from "@/lib/today";
-
-const subscribe = () => () => {};
+import { groupToday, type TodayItem } from "@/lib/today";
+import { useBrowserDay } from "@/lib/use-browser-day";
 
 /**
  * Today's sections, sorted with the browser's own day (API decision 035). Rendered only in the browser: the server
@@ -22,7 +21,7 @@ const subscribe = () => () => {};
 export function TodayView({ data, jobs }: { data: Today; jobs: JobOption[] }) {
   const t = useTranslations("Today");
   const locale = useLocale();
-  const today = useSyncExternalStore(subscribe, () => localDay(new Date()), () => null);
+  const today = useBrowserDay();
   if (!today) {
     return null;
   }

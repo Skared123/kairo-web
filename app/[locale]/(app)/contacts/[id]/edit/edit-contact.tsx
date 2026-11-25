@@ -25,7 +25,7 @@ export function EditContact({ contact }: { contact: Contact }) {
       if (!response.ok) {
         return validation("unexpected");
       }
-      router.push("/contacts");
+      router.push(`/contacts/${contact.id}`);
       router.refresh();
     } catch {
       return validation("unexpected");

@@ -216,6 +216,65 @@
     "employee": "Trabaja ahí",
     "other": "Otro"
   },
+  "ContactDetail": {
+    "back": "Contactos",
+    "edit": "Editar",
+    "interactions": "Conversaciones",
+    "notes": "Notas",
+    "reach": "Cómo contactarle",
+    "noReach": "Sin correo, teléfono ni LinkedIn.",
+    "linkedin": "Perfil de LinkedIn",
+    "followUp": "Próximo seguimiento",
+    "noFollowUp": "Sin seguimiento pendiente.",
+    "jobs": {
+      "title": "Vacantes",
+      "none": "No está ligado a ninguna vacante.",
+      "choose": "Elige una vacante",
+      "link": "Ligar",
+      "unlink": "Desligar {job}"
+    },
+    "delete": {
+      "button": "Borrar",
+      "title": "¿Borrar a {name}?",
+      "description": "Se borrará el contacto con sus conversaciones. Sus vacantes se quedan. No se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Borrar",
+      "deleting": "Borrando…"
+    }
+  },
+  "Interactions": {
+    "empty": "Todavía no hay conversaciones.",
+    "fields": {
+      "occurredOn": "Día",
+      "channel": "Medio",
+      "note": "Nota"
+    },
+    "add": {
+      "placeholder": "De qué hablaron…",
+      "submit": "Agregar",
+      "adding": "Agregando…"
+    },
+    "edit": {
+      "button": "Editar {interaction}",
+      "title": "Editar conversación",
+      "save": "Guardar",
+      "saving": "Guardando…"
+    },
+    "delete": {
+      "button": "Borrar {interaction}",
+      "title": "¿Borrar la conversación «{interaction}»?",
+      "cancel": "Cancelar",
+      "confirm": "Borrar",
+      "deleting": "Borrando…"
+    }
+  },
+  "InteractionChannel": {
+    "email": "Correo",
+    "linkedin": "LinkedIn",
+    "call": "Llamada",
+    "meeting": "Reunión",
+    "other": "Otro"
+  },
   "Jobs": {
     "title": "Vacantes",
     "description": "Las vacantes que estás siguiendo, por etapa.",

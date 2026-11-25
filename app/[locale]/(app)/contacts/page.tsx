@@ -80,7 +80,7 @@ async function ContactsView({ searchParams }: { searchParams: SearchParams }) {
             {contacts.map((contact) => (
               <TableRow key={contact.id}>
                 <TableCell className="font-medium">
-                  <Link href={`/contacts/${contact.id}/edit`} className="hover:underline">
+                  <Link href={`/contacts/${contact.id}`} className="hover:underline">
                     {contact.name}
                   </Link>
                   {contact.role && <span className="block text-xs text-muted-foreground">{contact.role}</span>}

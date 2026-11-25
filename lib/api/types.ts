@@ -46,3 +46,16 @@ export const CONTACT_KINDS = [
   "employee",
   "other",
 ] as const satisfies readonly ContactKind[];
+
+/** One conversation with a contact, as `GET /contacts/{contactId}/interactions` returns it (API decision 038). */
+export type Interaction =
+  paths["/contacts/{contactId}/interactions"]["get"]["responses"][200]["content"]["application/json"][number];
+export type InteractionChannel = Interaction["channel"];
+
+export const INTERACTION_CHANNELS = [
+  "email",
+  "linkedin",
+  "call",
+  "meeting",
+  "other",
+] as const satisfies readonly InteractionChannel[];

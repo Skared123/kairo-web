@@ -1,7 +1,7 @@
 import "server-only";
 import { connection } from "next/server";
 import { serverApi } from "./server";
-import type { Contact } from "./types";
+import type { Contact, Interaction } from "./types";
 
 export type ContactFilters = { q?: string; jobId?: string };
 
@@ -26,6 +26,19 @@ export async function getContact(id: string): Promise<Contact | null> {
   }
   if (!data) {
     throw new Error(`GET /contacts/${id} answered ${response.status}`);
+  }
+  return data;
+}
+
+/** The conversations with one of the user's contacts, latest first. Call it after getContact() found the contact. */
+export async function listInteractions(contactId: string): Promise<Interaction[]> {
+  await connection();
+  const api = await serverApi();
+  const { data, response } = await api.GET("/contacts/{contactId}/interactions", {
+    params: { path: { contactId } },
+  });
+  if (!data) {
+    throw new Error(`GET /contacts/${contactId}/interactions answered ${response.status}`);
   }
   return data;
 }

@@ -216,6 +216,65 @@
     "employee": "Works there",
     "other": "Other"
   },
+  "ContactDetail": {
+    "back": "Contacts",
+    "edit": "Edit",
+    "interactions": "Conversations",
+    "notes": "Notes",
+    "reach": "How to reach them",
+    "noReach": "No email, phone or LinkedIn.",
+    "linkedin": "LinkedIn profile",
+    "followUp": "Next follow-up",
+    "noFollowUp": "No follow-up pending.",
+    "jobs": {
+      "title": "Jobs",
+      "none": "Not linked to any job.",
+      "choose": "Choose a job",
+      "link": "Link",
+      "unlink": "Unlink {job}"
+    },
+    "delete": {
+      "button": "Delete",
+      "title": "Delete {name}?",
+      "description": "The contact and their conversations will be deleted. Their jobs stay. This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting…"
+    }
+  },
+  "Interactions": {
+    "empty": "No conversations yet.",
+    "fields": {
+      "occurredOn": "Day",
+      "channel": "Channel",
+      "note": "Note"
+    },
+    "add": {
+      "placeholder": "What you talked about…",
+      "submit": "Add",
+      "adding": "Adding…"
+    },
+    "edit": {
+      "button": "Edit {interaction}",
+      "title": "Edit conversation",
+      "save": "Save",
+      "saving": "Saving…"
+    },
+    "delete": {
+      "button": "Delete {interaction}",
+      "title": "Delete the conversation “{interaction}”?",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting…"
+    }
+  },
+  "InteractionChannel": {
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "call": "Call",
+    "meeting": "Meeting",
+    "other": "Other"
+  },
   "Jobs": {
     "title": "Jobs",
     "description": "The jobs you are following, by stage.",

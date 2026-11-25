@@ -33,7 +33,10 @@ test("adds a contact with every field, from an empty list", async ({ page, api }
   await main.getByLabel("Qué escribirle", { exact: true }).fill("Mandarle el portafolio");
   await main.getByRole("button", { name: "Guardar contacto" }).click();
 
-  await expect(page).toHaveURL(/\/es\/contacts$/);
+  // Saving opens the contact's page; the list shows it too.
+  await expect(page).toHaveURL(/\/es\/contacts\/[\w-]+$/);
+  await expect(main.getByRole("heading", { name: "Margaret Hamilton", level: 1 })).toBeVisible();
+  await main.getByRole("link", { name: "← Contactos" }).click();
   const row = page.getByRole("row", { name: /Margaret Hamilton/ });
   await expect(row).toContainText("Talent Partner");
   await expect(row).toContainText("Acme Robotics");
@@ -53,14 +56,17 @@ test("edits a contact and clears a field", async ({ page, api }) => {
   await page.getByRole("link", { name: "Margaret Hamilton" }).click();
 
   const main = page.getByRole("main");
+  await main.getByRole("link", { name: "Editar" }).click();
   await expect(main.getByRole("heading", { name: "Editar contacto" })).toBeVisible();
   await expect(main.getByLabel("Empresa", { exact: true })).toHaveValue("Acme Robotics");
   await main.getByLabel("Empresa", { exact: true }).fill("Globex");
   await main.getByLabel("Correo", { exact: true }).fill("");
   await main.getByRole("button", { name: "Guardar cambios" }).click();
 
-  await expect(page).toHaveURL(/\/es\/contacts$/);
-  await expect(page.getByRole("row", { name: /Margaret Hamilton/ })).toContainText("Globex");
+  // Back on the contact's page.
+  await expect(page).toHaveURL(new RegExp(`/es/contacts/${id}$`));
+  await expect(main.getByText("Globex")).toBeVisible();
+  await expect(main.getByText("Sin correo, teléfono ni LinkedIn.")).toBeVisible();
   expect(await api.getContact(id)).toMatchObject({ company: "Globex", email: null });
 });
 
@@ -110,6 +116,10 @@ test("never shows or opens another user's contacts", async ({ page, api }) => {
   await signIn(page, "grace@example.com", "abc123");
   await page.goto("/es/contacts");
   await expect(page.getByText("Aún no tienes contactos.")).toBeVisible();
+
+  await page.goto(`/es/contacts/${id}`);
+  await expect(page.getByText("404")).toBeVisible();
+  await expect(page.getByText("Margaret Hamilton")).toHaveCount(0);
 
   await page.goto(`/es/contacts/${id}/edit`);
   await expect(page.getByText("404")).toBeVisible();
