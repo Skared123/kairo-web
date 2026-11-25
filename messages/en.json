@@ -562,6 +562,10 @@
       "title": "Nothing pending",
       "description": "Add a task, or set a follow-up on a job or a contact.",
       "jobs": "Go to jobs"
+    },
+    "focus": {
+      "title": "Your study focus",
+      "link": "Go to learning"
     }
   },
   "Tasks": {

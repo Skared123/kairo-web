@@ -126,6 +126,12 @@ export class Api {
     return (await res.json()).id;
   }
 
+  /** Changes one of the signed-in admin's learning items. */
+  async updateLearningItem(id: string, fields: Record<string, unknown>): Promise<void> {
+    const res = await this.context.patch(`/learning/${id}`, { data: fields });
+    expect(res.status()).toBe(200);
+  }
+
   /** Reads one of the signed-in admin's learning items. */
   async getLearningItem(id: string): Promise<Record<string, unknown>> {
     const res = await this.context.get(`/learning/${id}`);

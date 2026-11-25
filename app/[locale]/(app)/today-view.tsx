@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useId, type ReactNode } from "react";
 import { FollowUpLine } from "@/components/follow-ups/follow-up-line";
 import { contactTarget, jobTarget } from "@/components/follow-ups/follow-up-target";
+import { FocusCard } from "@/components/learning/focus-card";
 import type { JobOption } from "@/components/tasks/job-option";
 import { QuickAddTask } from "@/components/tasks/quick-add-task";
 import { TaskLine } from "@/components/tasks/task-line";
@@ -36,6 +37,7 @@ export function TodayView({ data, jobs }: { data: Today; jobs: JobOption[] }) {
   return (
     <div className="flex flex-col gap-6">
       <p className="text-sm font-medium first-letter:uppercase">{formatLongDay(today, locale)}</p>
+      <FocusCard focus={data.focus} />
       <QuickAddTask jobs={jobs} />
 
       {nothingOpen && (

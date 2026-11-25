@@ -73,11 +73,12 @@ test("shows Today in English", async ({ page, api }) => {
   await expect(page.getByRole("region", { name: "Today · 1" })).toContainText("Send the updated CV");
 });
 
-test("never shows another user's tasks or follow-ups, of jobs or contacts", async ({ page, api }) => {
+test("never shows another user's tasks, follow-ups or study focus", async ({ page, api }) => {
   await api.setupAdmin();
   await api.createJob({ company: "Acme", title: "Engineer", nextFollowUpOn: day(0) });
   await api.createTask({ title: "Preparar la entrevista", dueOn: day(0) });
   await api.createContact({ name: "Margaret Hamilton", nextFollowUpOn: day(0) });
+  await api.createLearningItem({ title: "NestJS Fundamentals", isFocus: true });
   const temporary = await api.createAccount("Grace Hopper", "grace@example.com");
   await api.choosePassword("grace@example.com", temporary, "abc123");
 
@@ -85,6 +86,7 @@ test("never shows another user's tasks or follow-ups, of jobs or contacts", asyn
   await expect(page.getByText("No tienes pendientes")).toBeVisible();
   await expect(page.getByText("Preparar la entrevista")).toHaveCount(0);
   await expect(page.getByText("Margaret Hamilton")).toHaveCount(0);
+  await expect(page.getByText("NestJS Fundamentals")).toHaveCount(0);
 });
 
 /** Today's calendar day in `timeZone`, `offset` days after, as YYYY-MM-DD. */
@@ -126,4 +128,55 @@ test.describe("in a browser far behind (API decision 035)", () => {
       "Preparar la entrevista técnica",
     );
   });
+});
+
+test("shows the study focus under the date, and nothing without one", async ({ page, api }) => {
+  await api.setupAdmin();
+  const nest = await api.createLearningItem({
+    title: "NestJS Fundamentals",
+    kind: "course",
+    url: "https://example.com/nestjs",
+    status: "in_progress",
+    skills: ["TypeScript", "NestJS"],
+  });
+  await signIn(page, ADMIN.email, ADMIN.password);
+
+  const main = page.getByRole("main");
+  await expect(main.getByRole("heading", { name: "Hoy", level: 1 })).toBeVisible();
+  await expect(main.getByText("No tienes pendientes")).toBeVisible();
+  await expect(main.getByRole("region", { name: "Tu foco de estudio" })).toHaveCount(0);
+
+  await api.updateLearningItem(nest, { isFocus: true });
+  await page.reload();
+  const focus = main.getByRole("region", { name: "Tu foco de estudio" });
+  // The title opens the item's link; its skills come by name.
+  await expect(focus.getByRole("link", { name: "NestJS Fundamentals" })).toHaveAttribute(
+    "href",
+    "https://example.com/nestjs",
+  );
+  await expect(focus).toContainText("Curso · En curso");
+  await expect(focus.getByText("NestJS", { exact: true })).toBeVisible();
+  await expect(focus.getByText("TypeScript", { exact: true })).toBeVisible();
+
+  await focus.getByRole("link", { name: "Ir a aprendizaje" }).click();
+  await expect(main.getByRole("heading", { name: "Aprendizaje", level: 1 })).toBeVisible();
+
+  // Finishing it takes it off Today.
+  await api.updateLearningItem(nest, { status: "done" });
+  await page.goto("/es");
+  await expect(main.getByText("No tienes pendientes")).toBeVisible();
+  await expect(main.getByRole("region", { name: "Tu foco de estudio" })).toHaveCount(0);
+});
+
+test("shows a focus without a link, in English", async ({ page, api }) => {
+  await api.setupAdmin();
+  await api.createLearningItem({ title: "Build a CLI in Go", kind: "project", isFocus: true });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto("/en");
+
+  const focus = page.getByRole("main").getByRole("region", { name: "Your study focus" });
+  await expect(focus).toContainText("Build a CLI in Go");
+  await expect(focus.getByRole("link", { name: "Build a CLI in Go" })).toHaveCount(0);
+  await expect(focus).toContainText("Project · To start");
+  await expect(focus.getByRole("link", { name: "Go to learning" })).toBeVisible();
 });

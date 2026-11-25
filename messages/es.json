@@ -562,6 +562,10 @@
       "title": "No tienes pendientes",
       "description": "Agrega una tarea o ponle un seguimiento a una vacante o a un contacto.",
       "jobs": "Ir a vacantes"
+    },
+    "focus": {
+      "title": "Tu foco de estudio",
+      "link": "Ir a aprendizaje"
     }
   },
   "Tasks": {
