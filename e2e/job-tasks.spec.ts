@@ -65,7 +65,7 @@ test("keeps the job's tasks, without a job, when the job is deleted", async ({ p
 
   await page.getByRole("button", { name: "Borrar", exact: true }).click();
   const confirm = page.getByRole("alertdialog");
-  await expect(confirm).toContainText("Sus tareas se quedan, sin vacante.");
+  await expect(confirm).toContainText("Sus tareas y contactos se quedan, sin la vacante.");
   await confirm.getByRole("button", { name: "Borrar", exact: true }).click();
   await expect(page).toHaveURL(/\/es\/jobs$/);
 

@@ -206,7 +206,9 @@
       "role": "E.g. Talent Partner",
       "notes": "How you met, what they care about…",
       "nextFollowUpNote": "E.g. send the portfolio"
-    }
+    },
+    "linkedTo": "It will be linked to {job}.",
+    "jobNotFound": "That job no longer exists. Save the contact from Contacts."
   },
   "ContactKind": {
     "recruiter": "Recruiter",
@@ -395,7 +397,7 @@
     "delete": {
       "button": "Delete",
       "title": "Delete {name}?",
-      "description": "The job and its whole history will be deleted. Its tasks stay, without a job. This cannot be undone.",
+      "description": "The job and its whole history will be deleted. Its tasks and contacts stay, without the job. This cannot be undone.",
       "cancel": "Cancel",
       "confirm": "Delete",
       "deleting": "Deleting…"
@@ -405,6 +407,14 @@
       "title": "Tasks",
       "empty": "No tasks for this job yet.",
       "done": "Done · {count}"
+    },
+    "contacts": {
+      "title": "Contacts",
+      "none": "No contacts for this job.",
+      "choose": "Choose a contact",
+      "link": "Link",
+      "unlink": "Unlink {name}",
+      "new": "New contact"
     }
   },
   "Criteria": {

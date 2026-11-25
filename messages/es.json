@@ -206,7 +206,9 @@
       "role": "Ej. Talent Partner",
       "notes": "Cómo se conocieron, qué le interesa…",
       "nextFollowUpNote": "Ej. mandarle el portafolio"
-    }
+    },
+    "linkedTo": "Quedará ligado a {job}.",
+    "jobNotFound": "Esa vacante ya no existe. Guarda el contacto desde Contactos."
   },
   "ContactKind": {
     "recruiter": "Reclutador(a)",
@@ -395,7 +397,7 @@
     "delete": {
       "button": "Borrar",
       "title": "¿Borrar {name}?",
-      "description": "Se borrará la vacante con todo su historial. Sus tareas se quedan, sin vacante. No se puede deshacer.",
+      "description": "Se borrará la vacante con todo su historial. Sus tareas y contactos se quedan, sin la vacante. No se puede deshacer.",
       "cancel": "Cancelar",
       "confirm": "Borrar",
       "deleting": "Borrando…"
@@ -405,6 +407,14 @@
       "title": "Tareas",
       "empty": "Todavía no hay tareas para esta vacante.",
       "done": "Terminadas · {count}"
+    },
+    "contacts": {
+      "title": "Contactos",
+      "none": "Sin contactos para esta vacante.",
+      "choose": "Elige un contacto",
+      "link": "Ligar",
+      "unlink": "Desligar a {name}",
+      "new": "Nuevo contacto"
     }
   },
   "Criteria": {

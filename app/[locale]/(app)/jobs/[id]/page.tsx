@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 import { Suspense, type ReactNode } from "react";
 import { ClientDate } from "@/components/client-date";
 import { CriteriaBadges } from "@/components/criteria-badges";
+import { JobContacts } from "@/components/contacts/job-contacts";
 import { JobStatusBadge } from "@/components/job-status-badge";
 import { Button } from "@/components/ui/button";
 import { toJobOptions } from "@/components/tasks/job-option";
 import { Link } from "@/i18n/navigation";
+import { listContacts } from "@/lib/api/contacts";
 import { getJob, getJobHistory, listJobs } from "@/lib/api/jobs";
 import { listTasks } from "@/lib/api/tasks";
 import { requireUser } from "@/lib/auth";
@@ -17,7 +19,7 @@ import { DeleteJob } from "./delete-job";
 import { JobTasks } from "./job-tasks";
 import { StageSelect } from "./stage-select";
 
-/** One job: everything saved about it, its stage and history, its next follow-up and its tasks. */
+/** One job: everything saved about it, its stage and history, its next follow-up, its tasks and its contacts. */
 export default function JobPage({ params }: { params: Promise<{ id: string }> }) {
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 p-6">
@@ -37,11 +39,13 @@ async function JobDetail({ params }: { params: Promise<{ id: string }> }) {
     // Missing, or another user's: the API answers 404 to both, and so does this page.
     notFound();
   }
-  // Every job, for moving a task to another one from its edit dialog.
-  const [history, tasks, jobs, t, form, stages, locale] = await Promise.all([
+  // Every job, for moving a task to another one from its edit dialog; every contact, for linking one.
+  const [history, tasks, jobs, contacts, allContacts, t, form, stages, locale] = await Promise.all([
     getJobHistory(id),
     listTasks({ jobId: id }),
     listJobs({}),
+    listContacts({ jobId: id }),
+    listContacts({}),
     getTranslations("JobDetail"),
     getTranslations("JobForm"),
     getTranslations("JobStatus"),
@@ -133,6 +137,10 @@ async function JobDetail({ params }: { params: Promise<{ id: string }> }) {
             ) : (
               <p className="text-sm text-muted-foreground">{t("noFollowUp")}</p>
             )}
+          </Section>
+
+          <Section id={`contacts-${job.id}`} title={t("contacts.title")}>
+            <JobContacts jobId={job.id} contacts={contacts} options={allContacts} />
           </Section>
 
           <Section title={t("criteria")}>
