@@ -125,3 +125,17 @@ test("never shows or opens another user's contacts", async ({ page, api }) => {
   await expect(page.getByText("404")).toBeVisible();
   await expect(page.getByLabel("Nombre", { exact: true })).toHaveCount(0);
 });
+
+test("says so when saving a contact that was deleted in another tab", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createContact({ name: "Margaret Hamilton" });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto(`/es/contacts/${id}/edit`);
+  const main = page.getByRole("main");
+  await expect(main.getByLabel("Nombre", { exact: true })).toHaveValue("Margaret Hamilton");
+
+  await api.deleteContact(id);
+  await main.getByLabel("Empresa", { exact: true }).fill("Globex");
+  await main.getByRole("button", { name: "Guardar cambios" }).click();
+  await expect(main.getByText("Ese contacto ya no existe.")).toBeVisible();
+});

@@ -109,6 +109,11 @@ export class Api {
     return res.json();
   }
 
+  /** Deletes one of the signed-in admin's contacts, as another tab would. */
+  async deleteContact(id: string): Promise<void> {
+    expect((await this.context.delete(`/contacts/${id}`)).status()).toBe(204);
+  }
+
   /** Logs a conversation with one of the signed-in admin's contacts. */
   async logInteraction(contactId: string, fields: Record<string, unknown>): Promise<void> {
     expect((await this.context.post(`/contacts/${contactId}/interactions`, { data: fields })).status()).toBe(201);

@@ -140,3 +140,54 @@ test("deletes a contact after a confirmation, keeping their jobs", async ({ page
   await expect(page.getByText("Aún no tienes contactos.")).toBeVisible();
   expect(await api.getJob(job)).toMatchObject({ company: "Acme Robotics" });
 });
+
+test("shows a contact in English", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createContact({ name: "Margaret Hamilton", kind: "interviewer" });
+  await api.logInteraction(id, { occurredOn: "2026-11-20", channel: "meeting", note: "Second round" });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto(`/en/contacts/${id}`);
+
+  const main = page.getByRole("main");
+  await expect(main.getByText("Interviewer")).toBeVisible();
+  await expect(region(page, "Conversations").getByRole("listitem")).toContainText("Meeting · Nov 20, 2026");
+  await expect(region(page, "Jobs")).toContainText("Not linked to any job.");
+  await expect(main.getByText("No email, phone or LinkedIn.")).toBeVisible();
+});
+
+test("takes away a job deleted in another tab when it is unlinked", async ({ page, api }) => {
+  await api.setupAdmin();
+  const job = await api.createJob({ company: "Acme Robotics", title: "Senior Fullstack Engineer" });
+  const id = await api.createContact({ name: "Margaret Hamilton", jobIds: [job] });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto(`/es/contacts/${id}`);
+  const jobs = region(page, "Vacantes");
+  await expect(jobs.getByRole("link", { name: "Acme Robotics · Senior Fullstack Engineer" })).toBeVisible();
+
+  await api.deleteJob(job);
+  await jobs.getByRole("button", { name: "Desligar Acme Robotics · Senior Fullstack Engineer" }).click();
+
+  await expect(jobs).toContainText("No está ligado a ninguna vacante.");
+  await expect(page.getByText("Algo salió mal. Intenta de nuevo.")).toHaveCount(0);
+});
+
+test("says so when logging a conversation fails, and keeps what was typed", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createContact({ name: "Margaret Hamilton" });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto(`/es/contacts/${id}`);
+
+  // The API is down for this request only.
+  await page.route("**/api/contacts/*/interactions", (route) =>
+    route.request().method() === "POST" ? route.fulfill({ status: 500 }) : route.fallback(),
+  );
+  const log = region(page, "Conversaciones");
+  await log.getByLabel("Medio", { exact: true }).click();
+  await page.getByRole("option", { name: "Llamada" }).click();
+  await log.getByLabel("Nota", { exact: true }).fill("Hablamos del equipo");
+  await log.getByRole("button", { name: "Agregar" }).click();
+
+  await expect(log.getByText("Algo salió mal. Intenta de nuevo.")).toBeVisible();
+  await expect(log.getByLabel("Nota", { exact: true })).toHaveValue("Hablamos del equipo");
+  await expect(log).toContainText("Todavía no hay conversaciones.");
+});

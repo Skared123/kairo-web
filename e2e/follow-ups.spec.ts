@@ -166,3 +166,20 @@ test("postpones a contact's follow-up, keeping its note, and leads to the contac
   await upcoming.getByRole("link", { name: CONTACT }).click();
   await expect(page.getByRole("main").getByRole("heading", { name: "Margaret Hamilton", level: 1 })).toBeVisible();
 });
+
+test("takes away a contact deleted in another tab", async ({ page, api }) => {
+  await api.setupAdmin();
+  const contact = await api.createContact({
+    name: "Margaret Hamilton",
+    company: "Acme Robotics",
+    nextFollowUpOn: day(0),
+  });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await expect(section(page, /^Hoy · 1$/)).toContainText(CONTACT);
+
+  await api.deleteContact(contact);
+  await page.getByRole("button", { name: `Hecho: escribirle a ${CONTACT}` }).click();
+
+  await expect(page.getByText("No tienes pendientes")).toBeVisible();
+  await expect(page.getByText("Algo salió mal. Intenta de nuevo.")).toHaveCount(0);
+});
