@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { FollowUp, Task } from "./api/types";
-import { addDays, groupToday, localDay } from "./today";
+import type { ContactFollowUp, FollowUp, Task } from "./api/types";
+import { addDays, groupToday, localDay, type TodayItem } from "./today";
 
 // Monday 23 November 2026, as the browser would see it.
 const TODAY = "2026-11-23";
@@ -23,8 +23,14 @@ function followUp(id: string, on: string): FollowUp {
   return { job: { id, company: id, title: "Engineer", status: "applied" }, on, note: null };
 }
 
-const ids = (items: { kind: string; task?: Task; followUp?: FollowUp }[]) =>
-  items.map((item) => (item.kind === "task" ? item.task!.id : item.followUp!.job.id));
+function contactFollowUp(id: string, on: string): ContactFollowUp {
+  return { contact: { id, name: id, company: null }, on, note: null };
+}
+
+const ids = (items: TodayItem[]) =>
+  items.map((item) =>
+    item.kind === "task" ? item.task.id : item.kind === "followUp" ? item.followUp.job.id : item.followUp.contact.id,
+  );
 
 describe("localDay and addDays", () => {
   it("reads the day in the browser's time zone, and moves across months and years", () => {
@@ -39,7 +45,7 @@ describe("localDay and addDays", () => {
 
 describe("groupToday", () => {
   it("is empty without tasks or follow-ups", () => {
-    expect(groupToday({ tasks: [], followUps: [] }, TODAY)).toEqual({
+    expect(groupToday({ tasks: [], followUps: [], contactFollowUps: [] }, TODAY)).toEqual({
       overdue: [],
       today: [],
       upcoming: [],
@@ -61,25 +67,37 @@ describe("groupToday", () => {
           task("someday"),
         ],
         followUps: [followUp("last month", "2026-10-15"), followUp("acme", "2026-11-23")],
+        contactFollowUps: [contactFollowUp("margaret", "2026-11-23"), contactFollowUp("barbara", "2027-01-10")],
       },
       TODAY,
     );
     expect(ids(sections.overdue)).toEqual(["last month", "yesterday"]);
-    expect(ids(sections.today)).toEqual(["acme", "today"]);
+    expect(ids(sections.today)).toEqual(["acme", "margaret", "today"]);
     expect(ids(sections.upcoming)).toEqual(["tomorrow", "in a week"]);
-    expect(ids(sections.later)).toEqual(["in eight days"]);
+    expect(ids(sections.later)).toEqual(["in eight days", "barbara"]);
     expect(ids(sections.noDate)).toEqual(["someday"]);
   });
 
-  it("sorts by day, a follow-up before a task on the same day", () => {
+  it("sorts by day; on the same day, jobs' follow-ups, then contacts', then tasks", () => {
     const sections = groupToday(
       {
         tasks: [task("late task", { dueOn: "2026-11-20" }), task("later task", { dueOn: "2026-11-21" })],
         followUps: [followUp("late follow-up", "2026-11-21"), followUp("oldest", "2026-11-01")],
+        contactFollowUps: [
+          contactFollowUp("later contact", "2026-11-21"),
+          contactFollowUp("late contact", "2026-11-20"),
+        ],
       },
       TODAY,
     );
-    expect(ids(sections.overdue)).toEqual(["oldest", "late task", "late follow-up", "later task"]);
+    expect(ids(sections.overdue)).toEqual([
+      "oldest",
+      "late contact",
+      "late task",
+      "late follow-up",
+      "later contact",
+      "later task",
+    ]);
   });
 
   it("shows only the tasks done today, the latest first, and never as open", () => {
@@ -92,6 +110,7 @@ describe("groupToday", () => {
           task("yesterday night", { dueOn: "2026-11-22", doneAt: at(23, 22) }),
         ],
         followUps: [],
+        contactFollowUps: [],
       },
       TODAY,
     );

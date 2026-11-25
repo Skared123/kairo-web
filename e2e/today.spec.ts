@@ -73,16 +73,18 @@ test("shows Today in English", async ({ page, api }) => {
   await expect(page.getByRole("region", { name: "Today · 1" })).toContainText("Send the updated CV");
 });
 
-test("never shows another user's tasks or follow-ups", async ({ page, api }) => {
+test("never shows another user's tasks or follow-ups, of jobs or contacts", async ({ page, api }) => {
   await api.setupAdmin();
   await api.createJob({ company: "Acme", title: "Engineer", nextFollowUpOn: day(0) });
   await api.createTask({ title: "Preparar la entrevista", dueOn: day(0) });
+  await api.createContact({ name: "Margaret Hamilton", nextFollowUpOn: day(0) });
   const temporary = await api.createAccount("Grace Hopper", "grace@example.com");
   await api.choosePassword("grace@example.com", temporary, "abc123");
 
   await signIn(page, "grace@example.com", "abc123");
   await expect(page.getByText("No tienes pendientes")).toBeVisible();
   await expect(page.getByText("Preparar la entrevista")).toHaveCount(0);
+  await expect(page.getByText("Margaret Hamilton")).toHaveCount(0);
 });
 
 /** Today's calendar day in `timeZone`, `offset` days after, as YYYY-MM-DD. */

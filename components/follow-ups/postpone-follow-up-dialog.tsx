@@ -18,21 +18,20 @@ import {
 } from "@/components/ui/dialog";
 import { FieldError, FieldGroup } from "@/components/ui/field";
 import { useRouter } from "@/i18n/navigation";
-import { browserApi } from "@/lib/api/browser";
-import type { FollowUp } from "@/lib/api/types";
 import { POSTPONE_CHOICES, postponeSchema, type PostponeValues } from "@/lib/forms/postpone-schema";
 import { addDays } from "@/lib/today";
+import { saveFollowUp, type FollowUpTarget } from "./follow-up-target";
 
 /**
- * Moves a job's follow-up to another day (v0.3 design): a quick choice saves at once; "another day" takes a date.
- * The note stays. `today` is the browser's day (API decision 035).
+ * Moves a job's or a contact's follow-up to another day (v0.3 design): a quick choice saves at once; "another day"
+ * takes a date. The note stays. `today` is the browser's day (API decision 035).
  */
 export function PostponeFollowUpDialog({
-  followUp,
+  target,
   today,
   dayLabel,
 }: {
-  followUp: FollowUp;
+  target: FollowUpTarget;
   today: string;
   dayLabel: (day: string) => string;
 }) {
@@ -42,7 +41,6 @@ export function PostponeFollowUpDialog({
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-  const job = `${followUp.job.company} · ${followUp.job.title}`;
   const form = useForm<PostponeValues>({
     resolver: zodResolver(
       postponeSchema({ required: validation("required"), notBeforeToday: t("notBeforeToday") }, today),
@@ -62,11 +60,8 @@ export function PostponeFollowUpDialog({
     setPending(true);
     setFormError(null);
     try {
-      const { response } = await browserApi.PATCH("/jobs/{id}", {
-        params: { path: { id: followUp.job.id } },
-        body: { nextFollowUpOn: on },
-      });
-      // 404: the job was deleted meanwhile; the refresh takes its follow-up away.
+      const { response } = await saveFollowUp(target, { nextFollowUpOn: on });
+      // 404: deleted meanwhile; the refresh takes its follow-up away.
       if (response.ok || response.status === 404) {
         setOpen(false);
         router.refresh();
@@ -83,7 +78,7 @@ export function PostponeFollowUpDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" aria-label={t("label", { job })}>
+        <Button variant="ghost" size="sm" aria-label={t("label", { name: target.label })}>
           <CalendarClock aria-hidden />
           <span className="max-sm:hidden">{t("button")}</span>
         </Button>
@@ -92,7 +87,7 @@ export function PostponeFollowUpDialog({
         <form onSubmit={form.handleSubmit(({ on }) => postpone(on))} noValidate className="flex flex-col gap-6">
           <DialogHeader>
             <DialogTitle>{t("title")}</DialogTitle>
-            <DialogDescription>{t("description", { job, day: dayLabel(followUp.on) })}</DialogDescription>
+            <DialogDescription>{t("description", { name: target.label, day: dayLabel(target.on) })}</DialogDescription>
           </DialogHeader>
           <FieldGroup>
             <div className="flex flex-wrap gap-2">

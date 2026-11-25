@@ -1,9 +1,13 @@
-import type { FollowUp, Task, Today } from "./api/types";
+import type { ContactFollowUp, FollowUp, Task, Today } from "./api/types";
 
-/** One line in Today: a task or a job's follow-up, with the day it is due (null for a task without one). */
+/**
+ * One line in Today: a task, a job's follow-up or a contact's (API decision 037), with the day it is due (null for a
+ * task without one).
+ */
 export type TodayItem =
   | { kind: "task"; day: string | null; task: Task }
-  | { kind: "followUp"; day: string; followUp: FollowUp };
+  | { kind: "followUp"; day: string; followUp: FollowUp }
+  | { kind: "contactFollowUp"; day: string; followUp: ContactFollowUp };
 
 export type TodaySections = {
   overdue: TodayItem[];
@@ -36,17 +40,19 @@ export function addDays(day: string, days: number): string {
 
 /**
  * Sorts what `GET /today` answered into Today's sections, for the browser's `today` (YYYY-MM-DD, API decision 035).
- * Within a section, items go by day, a job's follow-up before a task on the same day; otherwise in the API's order.
+ * Within a section, items go by day; on the same day, jobs' follow-ups, then contacts', then tasks; otherwise in the
+ * API's order.
  */
-export function groupToday({ tasks, followUps }: Pick<Today, "tasks" | "followUps">, today: string): TodaySections {
+export function groupToday({ tasks, followUps, contactFollowUps }: Today, today: string): TodaySections {
   const lastUpcoming = addDays(today, UPCOMING_DAYS);
   const sections: TodaySections = { overdue: [], today: [], upcoming: [], later: [], noDate: [], doneToday: [] };
 
   const items: TodayItem[] = [
     ...followUps.map((followUp): TodayItem => ({ kind: "followUp", day: followUp.on, followUp })),
+    ...contactFollowUps.map((followUp): TodayItem => ({ kind: "contactFollowUp", day: followUp.on, followUp })),
     ...tasks.filter((task) => !task.doneAt).map((task): TodayItem => ({ kind: "task", day: task.dueOn, task })),
   ];
-  // A stable sort: same-day items keep the order above, follow-ups first.
+  // A stable sort: same-day items keep the order above.
   items.sort((a, b) => (a.day ?? "").localeCompare(b.day ?? ""));
 
   for (const item of items) {

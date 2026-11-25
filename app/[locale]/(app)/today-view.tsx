@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useId, type ReactNode } from "react";
 import { FollowUpLine } from "@/components/follow-ups/follow-up-line";
+import { contactTarget, jobTarget } from "@/components/follow-ups/follow-up-target";
 import type { JobOption } from "@/components/tasks/job-option";
 import { QuickAddTask } from "@/components/tasks/quick-add-task";
 import { TaskLine } from "@/components/tasks/task-line";
@@ -92,8 +93,8 @@ function Section({
           />
         ) : (
           <FollowUpLine
-            key={`follow-up-${item.followUp.job.id}`}
-            followUp={item.followUp}
+            key={item.kind === "followUp" ? `job-${item.followUp.job.id}` : `contact-${item.followUp.contact.id}`}
+            target={item.kind === "followUp" ? jobTarget(item.followUp) : contactTarget(item.followUp)}
             day={showDay ? dayLabel(item.day) : undefined}
             today={today}
             dayLabel={dayLabel}

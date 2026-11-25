@@ -32,6 +32,7 @@ export type Task = paths["/tasks"]["get"]["responses"][200]["content"]["applicat
 /** Everything Today shows, as `GET /today` returns it: not filtered by day (API decision 035). */
 export type Today = paths["/today"]["get"]["responses"][200]["content"]["application/json"];
 export type FollowUp = Today["followUps"][number];
+export type ContactFollowUp = Today["contactFollowUps"][number];
 
 /** A contact as the API returns it, with its jobs and the day of its latest conversation (API decisions 036 to 038). */
 export type Contact = paths["/contacts"]["get"]["responses"][200]["content"]["application/json"][number];

@@ -450,7 +450,7 @@
     },
     "empty": {
       "title": "Nothing pending",
-      "description": "Add a task, or set a follow-up on one of your jobs.",
+      "description": "Add a task, or set a follow-up on a job or a contact.",
       "jobs": "Go to jobs"
     }
   },
@@ -487,15 +487,17 @@
   },
   "FollowUps": {
     "label": "Follow-up",
+    "contactLabel": "Write to",
     "done": {
       "button": "Done",
-      "label": "Done: follow-up with {job}"
+      "label": "Done: follow-up with {name}",
+      "contactLabel": "Done: write to {name}"
     },
     "postpone": {
       "button": "Postpone",
-      "label": "Postpone the follow-up with {job}",
+      "label": "Postpone the follow-up with {name}",
       "title": "Postpone the follow-up",
-      "description": "{job}. Now due {day}.",
+      "description": "{name}. Now due {day}.",
       "in": "{days, plural, =1 {Tomorrow} =7 {In a week} other {In # days}}",
       "otherDay": "Another day",
       "save": "Postpone",

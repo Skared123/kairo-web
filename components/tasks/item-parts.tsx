@@ -1,15 +1,24 @@
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 
-/** A task's or follow-up's job, linking to its page. */
-export function JobLink({ job }: { job: { id: string; company: string; title: string } }) {
+/** A link inside a Today line, underlined lightly so it reads as one without shouting. */
+export function ItemLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link
-      href={`/jobs/${job.id}`}
+      href={href}
       className="underline decoration-muted-foreground/40 underline-offset-2 hover:decoration-foreground"
     >
-      {job.company} · {job.title}
+      {children}
     </Link>
+  );
+}
+
+/** A task's job, linking to its page. */
+export function JobLink({ job }: { job: { id: string; company: string; title: string } }) {
+  return (
+    <ItemLink href={`/jobs/${job.id}`}>
+      {job.company} · {job.title}
+    </ItemLink>
   );
 }
 
