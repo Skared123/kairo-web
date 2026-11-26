@@ -4,13 +4,13 @@
   },
   "AppHeader": {
     "signOut": "Sign out",
-    "signingOut": "Signing out…",
     "password": "Password",
     "admin": "Admin",
     "jobs": "Jobs",
     "today": "Today",
     "contacts": "Contacts",
-    "learning": "Learning"
+    "learning": "Learning",
+    "nav": "Sections"
   },
   "Preferences": {
     "darkTheme": "Dark theme",

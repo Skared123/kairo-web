@@ -1,84 +1,32 @@
-import { BookUser, Briefcase, CalendarCheck, GraduationCap, KeyRound, Users } from "lucide-react";
-import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { requireUser } from "@/lib/auth";
-import { LocaleSwitcher } from "./locale-switcher";
-import { SignOutButton } from "./sign-out-button";
-import { ThemeSwitch } from "./theme-switch";
+import { AccountMenu } from "./account-menu";
+import { MainNav, NavLinks } from "./main-nav";
 
-/** The bar on every signed-in page: the app's name, language, theme, and who is signed in. */
+/** The bar on every signed-in page: the app's name, its sections, and the account menu (decision 044). */
 export function AppHeader() {
   return (
-    <header className="flex items-center justify-between gap-4 border-b px-4 py-3">
+    <header className="flex items-center gap-2 border-b px-4 py-2 sm:gap-4">
       <Link href="/" className="font-semibold tracking-tight">
         Kairo
       </Link>
-      <div className="flex items-center gap-4">
-        {/* It reads the current path, which on routes with parameters (/jobs/[id]) is request-time data. */}
-        <Suspense fallback={null}>
-          <LocaleSwitcher />
-        </Suspense>
-        <ThemeSwitch />
+      {/* It reads the current path, which on routes with parameters (/jobs/[id]) is request-time data. */}
+      <Suspense fallback={<NavLinks current={null} />}>
+        <MainNav />
+      </Suspense>
+      <div className="ml-auto">
         {/* Reads the session, so it streams in after the rest of the bar. */}
         <Suspense fallback={null}>
-          <SignedInAs />
+          <Account />
         </Suspense>
       </div>
     </header>
   );
 }
 
-async function SignedInAs() {
-  const t = await getTranslations("AppHeader");
+async function Account() {
   // The header is on every signed-in page, /password included; the pages themselves enforce a forced change.
   const user = await requireUser({ allowPendingPasswordChange: true });
-  return (
-    <div className="flex items-center gap-2">
-      <Button asChild variant="ghost" size="sm">
-        <Link href="/">
-          <CalendarCheck aria-hidden />
-          {t("today")}
-        </Link>
-      </Button>
-      <Button asChild variant="ghost" size="sm">
-        <Link href="/jobs">
-          <Briefcase aria-hidden />
-          {t("jobs")}
-        </Link>
-      </Button>
-      <Button asChild variant="ghost" size="sm">
-        <Link href="/contacts">
-          <BookUser aria-hidden />
-          {t("contacts")}
-        </Link>
-      </Button>
-      <Button asChild variant="ghost" size="sm">
-        <Link href="/learning">
-          <GraduationCap aria-hidden />
-          {t("learning")}
-        </Link>
-      </Button>
-      {/* Only a shortcut: /admin/users checks the role, and so does the API. */}
-      {user.role === "admin" && (
-        <Button asChild variant="ghost" size="sm">
-          <Link href="/admin/users">
-            <Users aria-hidden />
-            {t("admin")}
-          </Link>
-        </Button>
-      )}
-      <span className="text-sm text-muted-foreground" title={user.email}>
-        {user.name}
-      </span>
-      <Button asChild variant="ghost" size="sm">
-        <Link href="/password">
-          <KeyRound aria-hidden />
-          {t("password")}
-        </Link>
-      </Button>
-      <SignOutButton />
-    </div>
-  );
+  return <AccountMenu name={user.name} email={user.email} isAdmin={user.role === "admin"} />;
 }

@@ -4,13 +4,13 @@
   },
   "AppHeader": {
     "signOut": "Cerrar sesión",
-    "signingOut": "Cerrando…",
     "password": "Contraseña",
     "admin": "Administración",
     "jobs": "Vacantes",
     "today": "Hoy",
     "contacts": "Contactos",
-    "learning": "Aprendizaje"
+    "learning": "Aprendizaje",
+    "nav": "Secciones"
   },
   "Preferences": {
     "darkTheme": "Tema oscuro",

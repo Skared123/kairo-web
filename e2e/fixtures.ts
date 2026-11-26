@@ -185,3 +185,11 @@ export async function signIn(page: Page, email: string, password: string): Promi
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await answered;
 }
+
+/** Opens the menu under the signed-in user's name, in the header (decision 044), and returns it. */
+export async function openAccountMenu(page: Page) {
+  await page.getByRole("banner").getByRole("button").click();
+  const menu = page.getByRole("menu");
+  await expect(menu).toBeVisible();
+  return menu;
+}

@@ -1,4 +1,4 @@
-import { ADMIN, expect, expireTemporaryPassword, signIn, test } from "./fixtures";
+import { ADMIN, expect, expireTemporaryPassword, openAccountMenu, signIn, test } from "./fixtures";
 
 const GRACE = { name: "Grace Hopper", email: "grace@example.com" };
 
@@ -37,7 +37,7 @@ test("explains an expired temporary password", async ({ page, api }) => {
 test("checks the confirmation and that the new password differs", async ({ page, api }) => {
   await api.setupAdmin();
   await signIn(page, ADMIN.email, ADMIN.password);
-  await page.getByRole("link", { name: "Contraseña" }).click();
+  await (await openAccountMenu(page)).getByRole("menuitem", { name: "Contraseña" }).click();
 
   await page.getByLabel("Contraseña actual").fill(ADMIN.password);
   await page.getByLabel("Nueva contraseña", { exact: true }).fill(ADMIN.password);

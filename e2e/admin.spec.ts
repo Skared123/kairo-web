@@ -1,9 +1,9 @@
-import { ADMIN, expect, signIn, test } from "./fixtures";
+import { ADMIN, expect, openAccountMenu, signIn, test } from "./fixtures";
 
 test("creates an account and shows its temporary password once", async ({ page, api }) => {
   await api.setupAdmin();
   await signIn(page, ADMIN.email, ADMIN.password);
-  await page.getByRole("link", { name: "Administración" }).click();
+  await (await openAccountMenu(page)).getByRole("menuitem", { name: "Administración" }).click();
   await expect(page.getByRole("heading", { name: "Cuentas" })).toBeVisible();
 
   await page.getByRole("button", { name: "Nueva cuenta" }).click();
@@ -60,7 +60,10 @@ test("keeps the admin screen from other users", async ({ page, api }) => {
 
   await signIn(page, "grace@example.com", "abc123");
   await expect(page.getByText("Hola, Grace Hopper.")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Administración" })).toHaveCount(0);
+  const menu = await openAccountMenu(page);
+  await expect(menu.getByRole("menuitem", { name: "Contraseña" })).toBeVisible();
+  await expect(menu.getByRole("menuitem", { name: "Administración" })).toHaveCount(0);
+  await page.keyboard.press("Escape");
 
   await page.goto("/es/admin/users");
   await expect(page).toHaveURL(/\/es$/);

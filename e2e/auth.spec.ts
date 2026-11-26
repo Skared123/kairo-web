@@ -1,4 +1,4 @@
-import { ADMIN, expect, signIn, test } from "./fixtures";
+import { ADMIN, expect, openAccountMenu, signIn, test } from "./fixtures";
 
 test("first run: setup creates the admin and signs them in", async ({ page, api }) => {
   void api; // starts from an empty database
@@ -41,7 +41,7 @@ test("signs in, refuses a wrong password, and signs out", async ({ page, api }) 
   await page.goto("/es/sign-in");
   await expect(page).toHaveURL(/\/es$/);
 
-  await page.getByRole("button", { name: "Cerrar sesión" }).click();
+  await (await openAccountMenu(page)).getByRole("menuitem", { name: "Cerrar sesión" }).click();
   await expect(page).toHaveURL(/\/es\/sign-in$/);
   await page.goto("/es");
   await expect(page).toHaveURL(/\/es\/sign-in$/);
