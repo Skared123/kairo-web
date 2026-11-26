@@ -180,6 +180,10 @@ test("shows learning in English", async ({ page, api }) => {
   const row = page.getByRole("row", { name: /Designing Data-Intensive Applications/ });
   await expect(row).toContainText("Book");
   await expect(row).toContainText("In progress");
+
+  await page.goto("/en/skills");
+  await expect(page.getByRole("heading", { name: "Skills", level: 1 })).toBeVisible();
+  await expect(page.getByText("No skills yet. Add them to your learning items.")).toBeVisible();
 });
 
 test("never shows or opens another user's learning items", async ({ page, api }) => {
@@ -197,6 +201,11 @@ test("never shows or opens another user's learning items", async ({ page, api })
   await page.goto(`/es/learning/${id}/edit`);
   await expect(page.getByText("404")).toBeVisible();
   await expect(page.getByLabel("Título", { exact: true })).toHaveCount(0);
+
+  // Nor Ada's skills.
+  await page.goto("/es/skills");
+  await expect(page.getByText("Aún no tienes habilidades. Agrégalas a tus recursos de aprendizaje.")).toBeVisible();
+  await expect(page.getByText("NestJS")).toHaveCount(0);
 });
 
 test("changes an item's status from the list", async ({ page, api }) => {
@@ -286,4 +295,37 @@ test("renames and deletes skills, and leads to their items", async ({ page, api 
   await main.getByRole("link", { name: "2 recursos" }).click();
   await expect(page).toHaveURL(/\/es\/learning\?skillId=/);
   await expect(page.getByRole("main").getByRole("row")).toHaveCount(3);
+});
+
+test("says so when saving an item that was deleted in another tab", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createLearningItem({ title: "NestJS Fundamentals" });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto(`/es/learning/${id}/edit`);
+  const main = page.getByRole("main");
+  await expect(main.getByLabel("Título", { exact: true })).toHaveValue("NestJS Fundamentals");
+
+  await api.deleteLearningItem(id);
+  await main.getByLabel("Notas", { exact: true }).fill("Voy en el módulo de pruebas");
+  await main.getByRole("button", { name: "Guardar cambios" }).click();
+  await expect(main.getByText("Ese recurso ya no existe.")).toBeVisible();
+});
+
+test("says so when a status change fails, and goes back to the saved one", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createLearningItem({ title: "NestJS Fundamentals", status: "in_progress" });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto("/es/learning");
+
+  // The API is down for this request only.
+  await page.route("**/api/learning/*", (route) =>
+    route.request().method() === "PATCH" ? route.fulfill({ status: 500 }) : route.fallback(),
+  );
+  const select = page.getByLabel("Estado de NestJS Fundamentals");
+  await select.click();
+  await page.getByRole("option", { name: "Terminado" }).click();
+
+  await expect(page.getByRole("main").getByText("Algo salió mal. Intenta de nuevo.")).toBeVisible();
+  await expect(select).toHaveText("En curso");
+  expect(await api.getLearningItem(id)).toMatchObject({ status: "in_progress" });
 });

@@ -139,6 +139,12 @@ export class Api {
     return res.json();
   }
 
+  /** Deletes one of the signed-in admin's learning items, as another tab would. */
+  async deleteLearningItem(id: string): Promise<void> {
+    const res = await this.context.delete(`/learning/${id}`);
+    expect(res.status()).toBe(204);
+  }
+
   /** The signed-in admin's skills, with their item counts. */
   async listSkills(): Promise<{ id: string; name: string; itemCount: number }[]> {
     const res = await this.context.get("/skills");
