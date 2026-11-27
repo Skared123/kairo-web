@@ -93,13 +93,8 @@ async function LearningView({ searchParams }: { searchParams: SearchParams }) {
             {items.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <div className="flex items-start gap-2">
-                    {/* A finished item cannot be the focus (API decision 042); the space keeps titles aligned. */}
-                    {item.status === "done" || item.status === "dropped" ? (
-                      <span className="size-7 shrink-0" />
-                    ) : (
-                      <FocusStar item={item} />
-                    )}
+                  {/* A finished item cannot be the focus (API decision 042); the space keeps titles aligned. */}
+                  <FocusStar item={item} finished={item.status === "done" || item.status === "dropped"}>
                     <div className="flex flex-col">
                       <div className="flex items-center gap-1.5">
                         <Link href={`/learning/${item.id}/edit`} className="font-medium hover:underline">
@@ -119,7 +114,7 @@ async function LearningView({ searchParams }: { searchParams: SearchParams }) {
                       </div>
                       <span className="text-xs text-muted-foreground">{kinds(item.kind)}</span>
                     </div>
-                  </div>
+                  </FocusStar>
                 </TableCell>
                 <TableCell>
                   {item.skills.length > 0 ? (

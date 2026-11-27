@@ -329,3 +329,27 @@ test("says so when a status change fails, and goes back to the saved one", async
   await expect(select).toHaveText("En curso");
   expect(await api.getLearningItem(id)).toMatchObject({ status: "in_progress" });
 });
+
+test("says so when the focus fails to save, and keeps the star as it was", async ({ page, api }) => {
+  await api.setupAdmin();
+  const id = await api.createLearningItem({ title: "NestJS Fundamentals", status: "in_progress" });
+  await signIn(page, ADMIN.email, ADMIN.password);
+  await page.goto("/es/learning");
+
+  // The API is down for this request only.
+  await page.route("**/api/learning/*", (route) =>
+    route.request().method() === "PATCH" ? route.fulfill({ status: 500 }) : route.fallback(),
+  );
+  const star = page.getByRole("button", { name: "Foco: NestJS Fundamentals" });
+  await star.click();
+
+  await expect(page.getByRole("main").getByText("Algo salió mal. Intenta de nuevo.")).toBeVisible();
+  await expect(star).toHaveAttribute("aria-pressed", "false");
+  expect(await api.getLearningItem(id)).toMatchObject({ isFocus: false });
+
+  // Trying again clears the message.
+  await page.unroute("**/api/learning/*");
+  await star.click();
+  await expect(star).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("main").getByText("Algo salió mal. Intenta de nuevo.")).toHaveCount(0);
+});
